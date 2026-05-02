@@ -36,6 +36,6 @@ class DashboardController extends Controller
         $recentOrders = Order::with('user')->latest()->limit(6)->get();
         $recentPayments = Payment::latest()->limit(6)->get();
 
-        return view('dashboard', compact('totalUsers', 'roles', 'totalMenus', 'totalOrders', 'latestMenus', 'recentOrders', 'recentPayments', 'category'));
+        return view('dashboard.dashboard', compact('totalUsers', 'roles', 'totalMenus', 'totalOrders', 'latestMenus', 'recentOrders', 'recentPayments', 'category'));
     }
 }

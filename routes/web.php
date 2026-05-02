@@ -42,6 +42,8 @@ Route::middleware('auth')->group(function () {
         Route::view('/owner', 'roles.owner')->name('owner');
         Route::view('/kasir', 'roles.kasir')->name('kasir');
         Route::view('/karyawan', 'roles.karyawan')->name('karyawan');
+        // Simple view to test MySQL connection
+        Route::view('/koneksi', 'dashboard.koneksi')->name('koneksi');
     });
 
     // Resources
