@@ -1,10 +1,10 @@
 @if($payments->count())
-    <div class="bg-white rounded-[2.5rem] border border-slate-100 shadow-sm overflow-hidden">
+    <div class="bg-white rounded-xl border border-slate-100 shadow-sm overflow-hidden">
         <div class="divide-y divide-slate-50">
             @foreach($payments as $p)
-                <div class="group flex justify-between items-center p-6 hover:bg-slate-50/50 transition-all duration-300">
-                    <div class="flex items-center gap-5">
-                        <div class="w-12 h-12 bg-red-50 rounded-2xl flex items-center justify-center text-red-700 group-hover:scale-110 transition-transform">
+                <div class="group flex flex-col sm:flex-row justify-between items-start sm:items-center p-4 gap-3 sm:gap-0 hover:bg-slate-50/50 transition-all duration-300">
+                    <div class="flex items-center gap-4 sm:gap-5 w-full sm:w-auto">
+                        <div class="w-10 h-10 sm:w-12 sm:h-12 shrink-0 bg-red-50 rounded-xl sm:rounded-2xl flex items-center justify-center text-red-700 group-hover:scale-110 transition-transform">
                             <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                 <path d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
                             </svg>
@@ -22,20 +22,20 @@
                         </div>
                     </div>
 
-                    <div class="flex items-center gap-8">
-                        <div class="text-right">
-                            <div class="text-sm text-slate-400 font-bold uppercase tracking-widest leading-none mb-1">Total</div>
+                    <div class="flex items-center justify-between sm:justify-end gap-4 sm:gap-8 w-full sm:w-auto mt-2 sm:mt-0 pt-3 sm:pt-0 border-t border-slate-50 sm:border-0">
+                        <div class="text-left sm:text-right">
+                            <div class="text-[10px] sm:text-sm text-slate-400 font-bold uppercase tracking-widest leading-none mb-1">Total</div>
                             <div class="text-xl font-black text-slate-900 tracking-tighter">
                                 <span class="text-xs text-red-700 mr-0.5">Rp</span>{{ number_format($p->amount,0,',','.') }}
                             </div>
                         </div>
 
                         <div class="flex items-center gap-2">
-                            <a href="{{ route('payments.show', $p) }}" class="p-2.5 text-slate-400 hover:text-red-700 hover:bg-red-50 rounded-xl transition-all" title="Detail">Detail</a>
-                            <form action="{{ route('payments.destroy', $p) }}" method="POST" class="inline-block">
+                            <a href="{{ route('payments.show', $p) }}" class="p-2 sm:p-2.5 text-xs sm:text-sm font-bold text-slate-400 hover:text-red-700 hover:bg-red-50 rounded-xl transition-all" title="Detail">Detail</a>
+                            <form action="{{ route('payments.destroy', $p) }}" method="POST" class="inline-block m-0">
                                 @csrf
                                 @method('DELETE')
-                                <button type="submit" class="p-2.5 text-slate-400 hover:text-red-600 hover:bg-red-50 rounded-xl transition-all" title="Hapus">Hapus</button>
+                                <button type="submit" class="p-2 sm:p-2.5 text-xs sm:text-sm font-bold text-slate-400 hover:text-red-600 hover:bg-red-50 rounded-xl transition-all" title="Hapus">Hapus</button>
                             </form>
                         </div>
                     </div>

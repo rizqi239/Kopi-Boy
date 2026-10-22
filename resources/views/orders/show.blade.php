@@ -3,69 +3,127 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Detail Pesanan - Kedai Pinky</title>
-    <script src="https://cdn.tailwindcss.com"></script>
-    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
-    <style>body { font-family: 'Plus Jakarta Sans', sans-serif; }</style>
+    <meta name="theme-color" content="#321b10">
+    <title>Detail Pesanan - Kedai Smart Pinky</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <style>
+        :root { --coffee: #4b2b19; --cream: #f5edda; --ink: #241a14; }
+        * { box-sizing: border-box; }
+        body { margin: 0; color: var(--ink); background: #321b10; font-family: 'DM Sans', sans-serif; }
+        .page-shell { min-height: 100vh; padding: 16px; background: linear-gradient(110deg, rgb(36 20 12 / 88%), rgb(47 26 16 / 72%)), url('{{ asset('image/coffee-login.jpg') }}') center / cover fixed; }
+        .page-header { max-width: 1500px; margin: 0 auto; padding: 14px 20px; display: flex; align-items: center; justify-content: space-between; gap: 16px; background: var(--cream); border: 1px solid rgb(255 255 255 / 68%); border-radius: 14px; }
+        .brand { color: var(--coffee); font-size: 16px; font-weight: 800; letter-spacing: 1px; text-decoration: none; text-transform: uppercase; }
+        .header-links { display: flex; flex-wrap: wrap; align-items: center; gap: 10px; }
+        .header-links a, .header-links button { padding: 10px 13px; color: #fff8ed; background: #482817; border: 0; border-radius: 8px; font: inherit; font-size: 12px; font-weight: 800; text-decoration: none; cursor: pointer; }
+        .header-links a:hover, .header-links button:hover { background: #684329; }
+        .header-links form { margin: 0; }
+        main { max-width: 1100px; margin: 36px auto 0; }
+        .page-heading { margin-bottom: 18px; }
+        .kicker { margin: 0 0 7px; color: #dbb78f; font-size: 10px; font-weight: 800; letter-spacing: 1.7px; text-transform: uppercase; }
+        h1 { margin: 0; color: #fff7ed; font-size: 29px; font-weight: 800; }
+        .panel { margin-bottom: 16px; padding: 22px; background: var(--cream); border: 1px solid rgb(255 255 255 / 75%); border-radius: 14px; box-shadow: 0 12px 36px rgb(0 0 0 / 18%); }
+        .details { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 18px; }
+        .detail-label { display: block; margin-bottom: 5px; color: #806b57; font-size: 10px; font-weight: 800; letter-spacing: 1px; text-transform: uppercase; }
+        .detail-value { color: #2b1d13; font-size: 14px; font-weight: 700; overflow-wrap: anywhere; }
+        .status { display: inline-block; padding: 5px 9px; color: #573a25; background: #e8dcc9; border-radius: 999px; }
+        .section-title { margin: 0 0 14px; color: #2b1d13; font-size: 17px; font-weight: 800; }
+        .table-scroll { overflow-x: auto; }
+        table { width: 100%; min-width: 520px; border-collapse: collapse; font-size: 13px; }
+        th { padding: 12px 10px; color: #806b57; border-bottom: 1px solid #ded2c0; font-size: 10px; font-weight: 800; letter-spacing: 1px; text-align: left; text-transform: uppercase; }
+        td { padding: 14px 10px; color: #4c3b2c; border-bottom: 1px solid #e6dccd; }
+        tbody tr:last-child td { border-bottom: 0; }
+        .numeric { text-align: right; white-space: nowrap; }
+        .total-row { display: flex; justify-content: space-between; gap: 16px; margin-top: 16px; padding-top: 16px; color: #2b1d13; border-top: 1px solid #ded2c0; font-size: 16px; font-weight: 800; }
+        footer { max-width: 1100px; margin: 20px auto 0; padding: 13px 4px; color: #e8d9c8; font-size: 10px; font-weight: 700; letter-spacing: 1px; text-transform: uppercase; }
+        @media (max-width: 620px) {
+            .page-shell { padding: 10px; }
+            .page-header { align-items: flex-start; flex-direction: column; padding: 13px; }
+            main { margin-top: 25px; }
+            h1 { font-size: 24px; }
+            .panel { padding: 15px; }
+            .details { grid-template-columns: 1fr; gap: 14px; }
+        }
+    </style>
 </head>
-<body class="bg-[#fcfcfd] text-slate-900 antialiased">
-    <main class="max-w-7xl mx-auto py-10 px-6">
-        <div class="p-6">
-            <div class="flex items-center justify-between mb-6">
-                <div>
-                    <h1 class="text-2xl font-extrabold text-slate-900">Detail Pesanan</h1>
-                    <div class="text-sm text-slate-500">{{ $order->invoice }}</div>
-                </div>
-                <div class="flex items-center gap-3">
-                    <form action="{{ route('payments.store') }}" method="POST" onsubmit="return confirm('Simpan pembayaran untuk pesanan ini?');">
-                        @csrf
-                        <input type="hidden" name="order_id" value="{{ $order->id }}">
-                        <input type="hidden" name="amount" value="{{ $order->total }}">
-                        <input type="hidden" name="method" value="{{ $order->payment_method ?? 'Cash' }}">
-                        <button type="submit" class="px-4 py-2 bg-amber-100 text-slate-800 rounded-2xl font-bold">Konfirmasi</button>
-                    </form>
-                    <a href="{{ route('orders.edit', $order) }}" class="px-4 py-2 bg-slate-100 rounded-2xl font-bold">Edit</a>
-                    <form action="{{ route('orders.destroy', $order) }}" method="POST" onsubmit="return confirm('Hapus pesanan ini?');">
-                        @csrf
-                        @method('DELETE')
-                        <button type="submit" class="px-4 py-2 bg-red-50 text-red-600 rounded-2xl font-bold">Hapus</button>
-                    </form>
-                </div>
+<body>
+    <div class="page-shell">
+        <header class="page-header">
+            <a href="{{ route('dashboard') }}" class="brand">Kedai Smart Pinky</a>
+            <nav class="header-links" aria-label="Navigasi">
+                <a href="{{ route('orders.history') }}">Riwayat Pesanan</a>
+                <a href="{{ route('payments.index') }}">Pembayaran</a>
+                <form action="{{ route('logout') }}" method="POST">
+                    @csrf
+                    <button type="submit">Keluar</button>
+                </form>
+            </nav>
+        </header>
+
+        <main>
+            <div class="page-heading">
+                <p class="kicker">Rincian transaksi</p>
+                <h1>Detail Pesanan</h1>
             </div>
 
-            <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
-                <div class="lg:col-span-2 bg-white rounded-xl border border-slate-100 p-4 shadow-sm">
-                    <h3 class="font-black text-sm text-slate-600 uppercase tracking-widest mb-3">Items</h3>
-                    <div class="space-y-3">
-                        @foreach($order->items as $it)
-                            <div class="flex justify-between items-center border-t pt-3">
-                                <div>
-                                    <div class="font-bold text-slate-800">{{ $it->name }}</div>
-                                    <div class="text-[12px] text-slate-500">{{ $it->quantity }} × Rp{{ number_format($it->price,0,',','.') }}</div>
-                                </div>
-                                <div class="font-black text-pink-600">Rp{{ number_format($it->subtotal,0,',','.') }}</div>
-                            </div>
-                        @endforeach
+            <section class="panel" aria-label="Informasi pesanan">
+                <div class="details">
+                    <div>
+                        <span class="detail-label">Invoice</span>
+                        <span class="detail-value">{{ $order->invoice }}</span>
+                    </div>
+                    <div>
+                        <span class="detail-label">Tanggal Pesanan</span>
+                        <span class="detail-value">{{ $order->created_at->format('d M Y, H:i') }}</span>
+                    </div>
+                    <div>
+                        <span class="detail-label">Status Pesanan</span>
+                        <span class="detail-value status">{{ ucfirst($order->status) }}</span>
+                    </div>
+                    <div>
+                        <span class="detail-label">Metode Pembayaran</span>
+                        <span class="detail-value">{{ $order->payment_method }}</span>
                     </div>
                 </div>
+            </section>
 
-                <div class="bg-white rounded-xl border border-slate-100 p-4 shadow-sm">
-                    <h3 class="font-black text-sm text-slate-600 uppercase tracking-widest mb-3">Ringkasan</h3>
-                    <div class="mb-2"><span class="text-sm text-slate-500">User</span><div class="font-bold">{{ $order->user->name ?? '—' }}</div></div>
-                    <div class="mb-2"><span class="text-sm text-slate-500">Metode</span><div class="font-bold">{{ $order->payment_method }}</div></div>
-                    <div class="mb-2"><span class="text-sm text-slate-500">Status</span><div class="font-bold">{{ ucfirst($order->status) }}</div></div>
-                    <div class="mt-4 pt-4 border-t">
-                        <div class="flex justify-between items-center"><span class="text-sm text-slate-500">Total</span><div class="font-black text-pink-600">Rp{{ number_format($order->total,0,',','.') }}</div></div>
-                    </div>
+            <section class="panel" aria-labelledby="items-title">
+                <h2 class="section-title" id="items-title">Item Pesanan</h2>
+                <div class="table-scroll">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Menu</th>
+                                <th class="numeric">Jumlah</th>
+                                <th class="numeric">Harga</th>
+                                <th class="numeric">Subtotal</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @forelse($order->items as $item)
+                                <tr>
+                                    <td>{{ $item->name }}</td>
+                                    <td class="numeric">{{ $item->quantity }}</td>
+                                    <td class="numeric">Rp{{ number_format($item->price, 0, ',', '.') }}</td>
+                                    <td class="numeric">Rp{{ number_format($item->subtotal, 0, ',', '.') }}</td>
+                                </tr>
+                            @empty
+                                <tr>
+                                    <td colspan="4">Belum ada item dalam pesanan ini.</td>
+                                </tr>
+                            @endforelse
+                        </tbody>
+                    </table>
                 </div>
-            </div>
-        </div>
-    </main>
+                <div class="total-row">
+                    <span>Total Pesanan</span>
+                    <span>Rp{{ number_format($order->total, 0, ',', '.') }}</span>
+                </div>
+            </section>
+        </main>
 
-    <footer class="max-w-7xl mx-auto py-10 px-6 border-t border-slate-100">
-        <div class="flex justify-between items-center text-slate-400"><p class="text-xs font-bold uppercase tracking-widest">&copy; 2026 Kedai Pinky Smart</p></div>
-    </footer>
-
-    @stack('scripts')
+        <footer>&copy; 2026 Kedai Smart Pinky</footer>
+    </div>
 </body>
 </html>

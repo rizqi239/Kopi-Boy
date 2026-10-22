@@ -20,14 +20,13 @@ class RegisterController extends Controller
             'name' => ['required','string','max:255'],
             'email' => ['required','email','max:255','unique:users,email'],
             'password' => ['required','confirmed','min:6'],
-            'role' => ['required','in:admin,kasir,karyawan,owner'],
         ]);
 
         $user = User::create([
             'name' => $data['name'],
             'email' => $data['email'],
             'password' => $data['password'],
-            'role' => $data['role'],
+            'role' => 'pelanggan',
         ]);
 
         Auth::login($user);

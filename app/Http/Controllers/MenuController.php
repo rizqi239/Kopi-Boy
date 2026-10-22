@@ -8,6 +8,13 @@ use Illuminate\Support\Facades\Storage;
 
 class MenuController extends Controller
 {
+    protected function authorizeAdmin(): void
+    {
+        if (auth()->user()?->role !== 'admin') {
+            abort(403, 'Anda tidak memiliki akses untuk mengelola menu.');
+        }
+    }
+
     /**
      * Menampilkan daftar menu dengan paginasi.
      */
@@ -29,6 +36,8 @@ class MenuController extends Controller
      */
     public function create()
     {
+        $this->authorizeAdmin();
+
         return view('menus.create');
     }
 
@@ -37,6 +46,8 @@ class MenuController extends Controller
      */
     public function store(Request $request)
     {
+        $this->authorizeAdmin();
+
         $data = $request->validate([
             'name'        => 'required|string|max:255',
             'description' => 'nullable|string',
@@ -62,6 +73,8 @@ class MenuController extends Controller
      */
     public function edit(Menu $menu)
     {
+        $this->authorizeAdmin();
+
         return view('menus.edit', compact('menu'));
     }
 
@@ -70,6 +83,8 @@ class MenuController extends Controller
      */
     public function update(Request $request, Menu $menu)
     {
+        $this->authorizeAdmin();
+
         $data = $request->validate([
             'name'        => 'required|string|max:255',
             'description' => 'nullable|string',
@@ -99,6 +114,8 @@ class MenuController extends Controller
      */
     public function destroy(Menu $menu)
     {
+        $this->authorizeAdmin();
+
         // Hapus file fisik gambar dari folder storage agar tidak menumpuk
         if ($menu->image) {
             Storage::disk('public')->delete($menu->image);

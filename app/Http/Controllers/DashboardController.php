@@ -21,9 +21,7 @@ class DashboardController extends Controller
 
         $roles = [
             'admin' => User::where('role', 'admin')->count(),
-            'kasir' => User::where('role', 'kasir')->count(),
-            'karyawan' => User::where('role', 'karyawan')->count(),
-            'owner' => User::where('role', 'owner')->count(),
+            'pelanggan' => User::where('role', 'pelanggan')->count(),
         ];
 
         $category = $request->get('category');
@@ -31,11 +29,11 @@ class DashboardController extends Controller
         if ($category) {
             $latestMenusQuery->where('category', $category);
         }
-        $latestMenus = $latestMenusQuery->limit(6)->get();
+        $latestMenus = $latestMenusQuery->limit(8)->get();
 
         $recentOrders = Order::with('user')->latest()->limit(6)->get();
         $recentPayments = Payment::latest()->limit(6)->get();
 
-        return view('dashboard.dashboard', compact('totalUsers', 'roles', 'totalMenus', 'totalOrders', 'latestMenus', 'recentOrders', 'recentPayments', 'category'));
+        return view('dashboard', compact('totalUsers', 'roles', 'totalMenus', 'totalOrders', 'latestMenus', 'recentOrders', 'recentPayments', 'category'));
     }
 }

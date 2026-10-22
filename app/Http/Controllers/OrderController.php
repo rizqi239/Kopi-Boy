@@ -12,15 +12,43 @@ use Illuminate\Support\Facades\DB;
 
 class OrderController extends Controller
 {
+    protected function authorizeAdmin(): void
+    {
+        if (auth()->user()?->role !== 'admin') {
+            abort(403, 'Anda tidak memiliki akses untuk mengelola pesanan.');
+        }
+    }
+
+    protected function authorizeCustomerOrderAccess(?Order $order = null): void
+    {
+        $user = auth()->user();
+
+        if ($user?->role === 'admin') {
+            return;
+        }
+
+        if (!$user) {
+            abort(403, 'Anda harus login untuk mengakses pesanan.');
+        }
+
+        if ($order && $order->user_id !== $user->id) {
+            abort(403, 'Anda tidak memiliki akses untuk melihat pesanan ini.');
+        }
+    }
+
     /**
      * Display a listing of unpaid orders.
      */
     public function index()
     {
-        $orders = Order::with(['user', 'payment'])
-            ->whereDoesntHave('payment')
-            ->latest()
-            ->paginate(12);
+        $query = Order::with(['user', 'payment'])
+            ->whereDoesntHave('payment');
+
+        if (auth()->user()?->role !== 'admin') {
+            $query->where('user_id', auth()->id());
+        }
+
+        $orders = $query->latest()->paginate(12);
 
         return view('orders.index', compact('orders'));
     }
@@ -30,10 +58,13 @@ class OrderController extends Controller
      */
     public function history()
     {
-        $orders = Order::with(['user', 'payment'])
-            ->whereHas('payment')
-            ->latest()
-            ->paginate(12);
+        $query = Order::with(['user', 'payment'])->latest();
+
+        if (auth()->user()?->role !== 'admin') {
+            $query->where('user_id', auth()->id());
+        }
+
+        $orders = $query->paginate(12);
 
         return view('orders.history', compact('orders'));
     }
@@ -43,8 +74,7 @@ class OrderController extends Controller
      */
     public function create()
     {
-        $menus = Menu::orderBy('name')->get();
-        return view('orders.create', compact('menus'));
+        return redirect()->route('dashboard');
     }
 
     /**
@@ -176,6 +206,8 @@ class OrderController extends Controller
      */
     public function show(Order $order)
     {
+        $this->authorizeCustomerOrderAccess($order);
+
         $order->load('items');
         return view('orders.show', compact('order'));
     }
@@ -185,6 +217,8 @@ class OrderController extends Controller
      */
     public function confirm(Order $order)
     {
+        $this->authorizeCustomerOrderAccess($order);
+
         $order->load(['items', 'user']);
         return view('orders.confirm', compact('order'));
     }
@@ -194,6 +228,8 @@ class OrderController extends Controller
      */
     public function edit(Order $order)
     {
+        $this->authorizeAdmin();
+
         return view('orders.edit', compact('order'));
     }
 
@@ -202,6 +238,8 @@ class OrderController extends Controller
      */
     public function update(Request $request, Order $order)
     {
+        $this->authorizeAdmin();
+
         $data = $request->validate([
             'payment_method' => 'required|string',
             'status' => 'required|string|in:pending,paid,completed,cancelled',
@@ -217,6 +255,8 @@ class OrderController extends Controller
      */
     public function destroy(Order $order)
     {
+        $this->authorizeAdmin();
+
         if ($order->payment) {
             return back()->with('error', 'Tidak dapat menghapus pesanan yang sudah dibayar.');
         }

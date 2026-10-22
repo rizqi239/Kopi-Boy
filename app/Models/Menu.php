@@ -10,6 +10,6 @@ class Menu extends Model
     use HasFactory;
 
     protected $fillable = [
-        'name', 'description', 'price', 'category', 'image',
+        'name', 'description', 'price', 'category', 'image', 'stock',
     ];
 }
