@@ -21,5 +21,32 @@ foreach ($subDirs as $dir) {
     }
 }
 
-// Forward request ke public/index.php Laravel
-require __DIR__ . '/../public/index.php';
+// Pastikan database sqlite di /tmp ada
+$dbFile = '/tmp/database.sqlite';
+$isNewDb = !file_exists($dbFile);
+if ($isNewDb) {
+    touch($dbFile);
+}
+
+// Bootstrap Laravel
+define('LARAVEL_START', microtime(true));
+
+if (file_exists($maintenance = __DIR__.'/../storage/framework/maintenance.php')) {
+    require $maintenance;
+}
+
+require __DIR__.'/../vendor/autoload.php';
+
+/** @var \Illuminate\Foundation\Application $app */
+$app = require_once __DIR__.'/../bootstrap/app.php';
+
+// Jika database sqlite baru dibuat di /tmp, jalankan migrasi otomatis
+if ($isNewDb && env('DB_CONNECTION') === 'sqlite') {
+    try {
+        \Illuminate\Support\Facades\Artisan::call('migrate', ['--force' => true]);
+    } catch (\Throwable $e) {
+        // Abaikan error migrasi agar request utama tetap jalan
+    }
+}
+
+$app->handleRequest(\Illuminate\Http\Request::capture());
