@@ -1,5 +1,9 @@
 <?php
 
+// Matikan output error/deprecated langsung ke browser agar tidak merusak HTTP response headers
+ini_set('display_errors', '0');
+error_reporting(E_ALL & ~E_DEPRECATED & ~E_USER_DEPRECATED);
+
 // Pastikan direktori storage yang dibutuhkan di /tmp dibuat secara dinamis untuk Vercel Serverless
 $storagePath = '/tmp/storage';
 $subDirs = [
