@@ -34,6 +34,7 @@
     "DB_DATABASE": "/tmp/database.sqlite",
     "SESSION_DRIVER": "cookie",
     "CACHE_STORE": "array",
-    "LOG_CHANNEL": "stderr"
+    "LOG_CHANNEL": "stderr",
+    "GOOGLE_REDIRECT_URI": "https://kopi-boy.vercel.app/auth/google/callback"
   }
 }

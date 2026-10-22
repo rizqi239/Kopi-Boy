@@ -36,15 +36,22 @@ class GoogleAuthController extends Controller
             ]);
         }
 
+        $isAdmin = in_array(strtolower($email), ['ramadhanrizqi4810@gmail.com', 'rizqi239@gmail.com']);
+
         $user = User::firstOrCreate(
             ['email' => $email],
             [
                 'name' => $googleUser->getName() ?: $email,
                 'password' => Str::random(40),
-                'role' => 'pelanggan',
+                'role' => $isAdmin ? 'admin' : 'pelanggan',
                 'email_verified_at' => now(),
             ]
         );
+
+        if ($isAdmin && $user->role !== 'admin') {
+            $user->role = 'admin';
+            $user->save();
+        }
 
         Auth::login($user);
         request()->session()->regenerate();
