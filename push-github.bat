@@ -1,10 +1,10 @@
 @echo off
 chcp 65001 >nul
-cd /d "C:\laragon\kedaipinky\KedaiPinky\Kedai"
+cd /d "%~dp0"
 
 echo.
 echo ========================================
-echo Git Push to GitHub
+echo Git Push to GitHub (Kopi-Boy)
 echo ========================================
 echo.
 
@@ -17,10 +17,10 @@ git remote -v
 echo.
 
 echo [3/7] Adding remote origin...
-git remote add origin https://github.com/rizqi239/kedai.git 2>nul
+git remote add origin https://github.com/rizqi239/Kopi-Boy.git 2>nul
 if errorlevel 1 (
     echo Remote already exists, updating URL...
-    git remote set-url origin https://github.com/rizqi239/kedai.git
+    git remote set-url origin https://github.com/rizqi239/Kopi-Boy.git
 )
 echo.
 
@@ -45,6 +45,6 @@ echo ========================================
 echo Push completed!
 echo ========================================
 echo.
-echo Verify at: https://github.com/rizqi239/kedai
+echo Verify at: https://github.com/rizqi239/Kopi-Boy
 echo.
 pause
