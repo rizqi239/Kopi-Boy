@@ -21,7 +21,6 @@
     "APP_NAME": "KedaiPinky",
     "APP_ENV": "production",
     "APP_DEBUG": "false",
-    "APP_KEY": "base64:/2OjIY1Ku3LdRpOx15zRwdR1BmisXuUSlarR8Ntw0Ms=",
     "APP_URL": "https://kopi-boy.vercel.app",
     "LARAVEL_STORAGE_PATH": "/tmp/storage",
     "VIEW_COMPILED_PATH": "/tmp/storage/framework/views",

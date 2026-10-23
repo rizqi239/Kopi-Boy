@@ -2,6 +2,7 @@
 /tests
 .git
 .env
+.env.local
 .env.backup
 .env.production
 KedaiPinky.zip
