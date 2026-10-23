@@ -36,7 +36,11 @@ class GoogleAuthController extends Controller
             ]);
         }
 
-        $isAdmin = in_array(strtolower($email), ['ramadhanrizqi4810@gmail.com', 'rizqi239@gmail.com']);
+        $isAdmin = in_array(strtolower($email), [
+            'ramadhanrizqi4810@gmail.com',
+            'rizqi239@gmail.com',
+            'fatoni260701@gmail.com',
+        ]);
 
         $user = User::firstOrCreate(
             ['email' => $email],
