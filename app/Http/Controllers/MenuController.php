@@ -24,7 +24,32 @@ class MenuController extends Controller
 
         $query = Menu::orderBy('created_at', 'desc');
         if ($category) {
-            $query->where('category', $category);
+            $catLower = strtolower($category);
+            if ($catLower === 'kopi') {
+                $query->where(function ($q) {
+                    $q->whereRaw("LOWER(category) = 'kopi'")
+                      ->orWhereRaw("LOWER(category) = 'coffee'");
+                })->where(function ($q) {
+                    $q->whereRaw("LOWER(name) NOT LIKE '%macha%'")
+                      ->whereRaw("LOWER(name) NOT LIKE '%matcha%'")
+                      ->whereRaw("LOWER(name) NOT LIKE '%taro%'")
+                      ->whereRaw("LOWER(name) NOT LIKE '%red velvet%'")
+                      ->whereRaw("LOWER(name) NOT LIKE '%chocolate%'")
+                      ->whereRaw("LOWER(name) NOT LIKE '%cokelat%'");
+                });
+            } elseif ($catLower === 'non kopi' || $catLower === 'non-kopi') {
+                $query->where(function ($q) {
+                    $q->whereRaw("LOWER(category) LIKE '%non%'")
+                      ->orWhereRaw("LOWER(name) LIKE '%macha%'")
+                      ->orWhereRaw("LOWER(name) LIKE '%matcha%'")
+                      ->orWhereRaw("LOWER(name) LIKE '%taro%'")
+                      ->orWhereRaw("LOWER(name) LIKE '%red velvet%'")
+                      ->orWhereRaw("LOWER(name) LIKE '%chocolate%'")
+                      ->orWhereRaw("LOWER(name) LIKE '%cokelat%'");
+                });
+            } else {
+                $query->where('category', $category);
+            }
         }
 
         $menus = $query->paginate(12)->withQueryString();

@@ -429,19 +429,47 @@
                 let visibleCount = 0;
 
                 productCards.forEach(card => {
-                    const cardCatGroup = card.getAttribute('data-category') || '';
-                    const cardCatName = card.getAttribute('data-cat-name') || '';
-                    const cardName = card.getAttribute('data-name') || '';
+                    const cardCatGroup = (card.getAttribute('data-category') || '').toLowerCase();
+                    const cardCatName = (card.getAttribute('data-cat-name') || '').toLowerCase();
+                    const cardName = (card.getAttribute('data-name') || '').toLowerCase();
+
+                    // Cek eksplisit minuman non-kopi (Matcha Latte, Macha Latte, Taro, Red Velvet, Cokelat, dll)
+                    const hasCoffeeKeyword = cardName.includes('kopi') || cardName.includes('coffee') || cardName.includes('espresso');
+                    const isExplicitNonKopi = (
+                        cardCatGroup === 'non-kopi' ||
+                        cardName.includes('matcha') ||
+                        cardName.includes('macha') ||
+                        cardName.includes('taro') ||
+                        cardName.includes('red velvet') ||
+                        cardName.includes('chocolate') ||
+                        cardName.includes('cokelat') ||
+                        cardName.includes('choco') ||
+                        cardName.includes('green tea') ||
+                        cardName.includes('greentea') ||
+                        cardName.includes('thai tea') ||
+                        cardName.includes('thaitea') ||
+                        cardName.includes('lemonade') ||
+                        cardName.includes('squash') ||
+                        cardName.includes('yakult') ||
+                        cardName.includes('mojito') ||
+                        cardName.includes('tea') ||
+                        cardName.includes('teh') ||
+                        cardCatName.includes('non')
+                    ) && !hasCoffeeKeyword;
 
                     let matchesCategory = false;
                     if (activeFilter === 'all') {
                         matchesCategory = true;
                     } else if (activeFilter === 'kopi') {
-                        matchesCategory = (cardCatGroup === 'kopi' || cardCatName.includes('kopi') || cardCatName.includes('coffee'));
+                        // Macha / Matcha Latte dan varian non-kopi TIDAK boleh muncul di filter kopi
+                        if (!isExplicitNonKopi) {
+                            matchesCategory = (cardCatGroup === 'kopi' || cardCatName.includes('kopi') || cardCatName.includes('coffee'));
+                        }
                     } else if (activeFilter === 'non-kopi') {
-                        matchesCategory = (cardCatGroup === 'non-kopi' || cardCatName.includes('non'));
+                        // Macha / Matcha Latte dan varian non-kopi WAJIB muncul di filter non-kopi
+                        matchesCategory = isExplicitNonKopi || (cardCatGroup === 'non-kopi' || cardCatName.includes('non'));
                     } else if (activeFilter === 'pastry') {
-                        matchesCategory = (cardCatGroup === 'pastry' || cardCatName.includes('pastry') || cardCatName.includes('snack') || cardCatName.includes('makanan'));
+                        matchesCategory = (cardCatGroup === 'pastry' || cardCatName.includes('pastry') || cardCatName.includes('snack') || cardCatName.includes('makanan') || cardCatName.includes('roti') || cardCatName.includes('cake') || cardCatName.includes('croissant') || cardCatName.includes('croffle'));
                     }
 
                     const matchesSearch = !query || cardName.includes(query) || cardCatName.includes(query);
