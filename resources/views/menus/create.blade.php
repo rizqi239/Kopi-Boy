@@ -131,7 +131,7 @@
         <a href="{{ route('menus.index') }}" class="back-link">Kembali ke Daftar Menu</a>
       </div>
 
-      @if($errors->any())
+      @if(isset($errors) && $errors->any())
         <div class="error-panel" role="alert">
           <ul>
             @foreach($errors->all() as $error)
@@ -150,15 +150,28 @@
 
         <div class="field">
           <label for="category">Kategori</label>
-          <input id="category" type="text" name="category" value="{{ old('category') }}" placeholder="Contoh: Coffee">
+          <input id="category" list="category-options" type="text" name="category" value="{{ old('category') }}" placeholder="Pilih atau ketik kategori..." required>
+          <datalist id="category-options">
+            <option value="Kopi"></option>
+            <option value="Non Kopi"></option>
+            <option value="Pastry"></option>
+            <option value="Makanan"></option>
+            <option value="Minuman"></option>
+            <option value="Snack"></option>
+          </datalist>
         </div>
 
         <div class="field">
-          <label for="price">Harga</label>
+          <label for="price">Harga (Rp)</label>
           <input id="price" type="number" name="price" value="{{ old('price') }}" min="0" step="1" placeholder="0" required>
         </div>
 
         <div class="field">
+          <label for="stock">Stok Tersedia</label>
+          <input id="stock" type="number" name="stock" value="{{ old('stock', 0) }}" min="0" step="1" placeholder="0">
+        </div>
+
+        <div class="field full">
           <label for="image">Gambar Menu</label>
           <input id="image" type="file" name="image" accept=".jpg,.jpeg,.png,.webp,.gif,image/jpeg,image/png,image/webp,image/gif">
         </div>

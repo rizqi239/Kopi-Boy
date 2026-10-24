@@ -52,6 +52,7 @@ class MenuController extends Controller
             'name'        => 'required|string|max:255',
             'description' => 'nullable|string',
             'price'       => 'required|numeric|min:0',
+            'stock'       => 'nullable|integer|min:0',
             // Validasi file gambar (maksimal 5MB)
             'image'       => 'nullable|file|mimes:jpg,jpeg,png,webp,gif|max:5120',
             'category'    => 'nullable|string|max:100',
@@ -89,6 +90,7 @@ class MenuController extends Controller
             'name'        => 'required|string|max:255',
             'description' => 'nullable|string',
             'price'       => 'required|numeric|min:0',
+            'stock'       => 'nullable|integer|min:0',
             'image'       => 'nullable|file|mimes:jpg,jpeg,png,webp,gif|max:5120',
             'category'    => 'nullable|string|max:100',
         ]);

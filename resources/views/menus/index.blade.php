@@ -60,7 +60,10 @@
     .menu-description { min-height: 34px; margin: 6px 0 12px; overflow: hidden; color: #806f60; font-size: 11px; line-height: 1.55; }
     .menu-card-footer { display: flex; align-items: center; justify-content: space-between; gap: 10px; }
     .menu-price-label { display: block; margin-bottom: 3px; color: #958572; font-size: 9px; font-weight: 800; letter-spacing: 0.8px; text-transform: uppercase; }
-    .menu-price { color: #3b281b; font-size: 16px; font-weight: 800; white-space: nowrap; }
+    .card-actions { display: flex; align-items: center; gap: 6px; }
+    .edit-button { width: 36px; height: 36px; display: grid; place-items: center; color: #806a55; background: #f2e8d9; border: 0; border-radius: 8px; cursor: pointer; text-decoration: none; transition: color 150ms ease, background 150ms ease; }
+    .edit-button:hover { color: #fff; background: #4b2b19; }
+    .edit-button svg { width: 17px; height: 17px; }
     .delete-button { width: 36px; height: 36px; display: grid; place-items: center; color: #806a55; background: #f2e8d9; border: 0; border-radius: 8px; cursor: pointer; transition: color 150ms ease, background 150ms ease; }
     .delete-button:hover { color: #fff; background: #8b312a; }
     .delete-button svg { width: 17px; height: 17px; }
@@ -155,8 +158,9 @@
       <div class="menu-toolbar">
         <nav class="category-tabs" aria-label="Filter kategori menu">
           <a href="{{ route('menus.index') }}" class="category-tab {{ empty($category) ? 'active' : '' }}">Semua</a>
-          <a href="{{ route('menus.index', ['category' => 'Makanan']) }}" class="category-tab {{ $category === 'Makanan' ? 'active' : '' }}">Makanan</a>
-          <a href="{{ route('menus.index', ['category' => 'Minuman']) }}" class="category-tab {{ $category === 'Minuman' ? 'active' : '' }}">Minuman</a>
+          <a href="{{ route('menus.index', ['category' => 'Kopi']) }}" class="category-tab {{ $category === 'Kopi' ? 'active' : '' }}">Kopi</a>
+          <a href="{{ route('menus.index', ['category' => 'Non Kopi']) }}" class="category-tab {{ $category === 'Non Kopi' ? 'active' : '' }}">Non Kopi</a>
+          <a href="{{ route('menus.index', ['category' => 'Pastry']) }}" class="category-tab {{ $category === 'Pastry' ? 'active' : '' }}">Pastry</a>
         </nav>
         @if(auth()->user()?->role === 'admin')
           <a href="{{ route('menus.create') }}" class="heading-action">Tambah Menu</a>
@@ -182,15 +186,25 @@
                 <div>
                   <span class="menu-price-label">Harga</span>
                   <span class="menu-price">Rp{{ number_format($menu->price, 0, ',', '.') }}</span>
+                  @if(isset($menu->stock))
+                    <span style="display:block;font-size:10px;color:#85776c;margin-top:2px;font-weight:600;">Stok: {{ $menu->stock }}</span>
+                  @endif
                 </div>
                 @if(auth()->user()?->role === 'admin')
-                  <form method="POST" action="{{ route('menus.destroy', $menu) }}" onsubmit="return confirm('Hapus menu {{ $menu->name }}?');">
-                    @csrf
-                    @method('DELETE')
-                    <button type="submit" class="delete-button" title="Hapus menu" aria-label="Hapus {{ $menu->name }}">
-                      <svg fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8" d="M4 7h16m-10 4v6m4-6v6M6 7l1 13h10l1-13M9 7V4h6v3"/></svg>
-                    </button>
-                  </form>
+                  <div class="card-actions">
+                    <a href="{{ route('menus.edit', $menu) }}" class="edit-button" title="Edit menu" aria-label="Edit {{ $menu->name }}">
+                      <svg fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"/>
+                      </svg>
+                    </a>
+                    <form method="POST" action="{{ route('menus.destroy', $menu) }}" onsubmit="return confirm('Hapus menu {{ $menu->name }}?');">
+                      @csrf
+                      @method('DELETE')
+                      <button type="submit" class="delete-button" title="Hapus menu" aria-label="Hapus {{ $menu->name }}">
+                        <svg fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8" d="M4 7h16m-10 4v6m4-6v6M6 7l1 13h10l1-13M9 7V4h6v3"/></svg>
+                      </button>
+                    </form>
+                  </div>
                 @endif
               </div>
             </div>
