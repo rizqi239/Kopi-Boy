@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="theme-color" content="#321b10">
-    <title>Pembayaran - Kedai Smart Pinky</title>
+    <title>Pembayaran - KOPI-BOY</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -239,13 +239,13 @@
 <body>
     <div class="pos-shell">
         <header class="pos-header">
-            <a class="brand" href="{{ route('dashboard') }}" aria-label="Kedai Smart Pinky dashboard">
+            <a class="brand" href="{{ route('dashboard') }}" aria-label="KOPI-BOY dashboard">
                 <span class="brand-mark" aria-hidden="true">
                     <svg fill="currentColor" viewBox="0 0 24 24"><path d="M3 3h2v7H3zm4 0h2v7H7zm4 0h2v7h-2zm3 0h2v7h-2zm3 0h2v7h-2zm-5 9h6v2a5 5 0 0 1-4 4.9V21h-2v-2.1A5 5 0 0 1 8 14v-2h4zM6 5h1v7a6 6 0 0 0 2 4.5V21H7v-3.5A8 8 0 0 1 5 12V5h1zm12 0h1v7a8 8 0 0 1-2 5.5V21h-2v-4.5a6 6 0 0 0 2-4.5V5h1z"/></svg>
                 </span>
                 <span>
-                    <span class="brand-title">Kedai Smart Pinky</span>
-                    <span class="brand-caption">Kedai Smart Pinky — Point of Sale</span>
+                    <span class="brand-title">KOPI-BOY</span>
+                    <span class="brand-caption">KOPI-BOY — Point of Sale</span>
                 </span>
             </a>
 
@@ -458,7 +458,7 @@
             @endif
         </main>
 
-        <footer class="pos-footer">&copy; 2026 Kedai Smart Pinky</footer>
+        <footer class="pos-footer">&copy; 2026 KOPI-BOY</footer>
     </div>
 
     <script>

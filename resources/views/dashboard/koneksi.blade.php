@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Lokasi Maps | Kedai Smart Pinky</title>
+    <title>Lokasi Maps | KOPI-BOY</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -34,7 +34,7 @@
             </div>
             <div class="body">
                 <div class="info">
-                    Kedai Smart Pinky<br>
+                    KOPI-BOY<br>
                     GXQG+9GW Cikahuripan, Bogor Regency, West Java
                 </div>
 
@@ -43,12 +43,12 @@
                         src="https://www.google.com/maps?q=GXQG%2B9GW+Cikahuripan,+Bogor+Regency,+West+Java&z=17&output=embed"
                         loading="lazy"
                         referrerpolicy="no-referrer-when-downgrade"
-                        title="Lokasi Kedai Smart Pinky">
+                        title="Lokasi KOPI-BOY">
                     </iframe>
                 </div>
 
                 <div class="actions">
-                    <a class="btn primary" href="https://www.google.com/maps/search/?api=1&query=Kedai+Smart+Pinky" target="_blank" rel="noopener noreferrer">Buka di Google Maps</a>
+                    <a class="btn primary" href="https://www.google.com/maps/search/?api=1&query=KOPI-BOY" target="_blank" rel="noopener noreferrer">Buka di Google Maps</a>
                     <a class="btn secondary" href="{{ route('dashboard') }}">Kembali ke Dashboard</a>
                 </div>
             </div>

@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="theme-color" content="#321b10">
-    <title>Manajemen - Kedai Smart Pinky</title>
+    <title>Manajemen - KOPI-BOY</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
@@ -44,7 +44,7 @@
 <body>
     <main class="management-shell">
         <header class="management-header">
-            <a class="management-brand" href="{{ route('dashboard') }}">Kedai Smart Pinky</a>
+            <a class="management-brand" href="{{ route('dashboard') }}">KOPI-BOY</a>
             <nav class="management-nav" aria-label="Navigasi manajemen">
                 <a href="{{ route('dashboard') }}">Dashboard</a>
                 <form method="POST" action="{{ route('logout') }}">

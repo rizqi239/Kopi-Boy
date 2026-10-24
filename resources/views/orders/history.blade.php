@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="theme-color" content="#321b10">
-    <title>Riwayat Pesanan - Kedai Smart Pinky</title>
+    <title>Riwayat Pesanan - KOPI-BOY</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
@@ -51,7 +51,7 @@
 <body>
     <div class="page-shell">
         <header class="page-header">
-            <a href="{{ route('dashboard') }}" class="brand">Kedai Smart Pinky</a>
+            <a href="{{ route('dashboard') }}" class="brand">KOPI-BOY</a>
             <nav class="header-links" aria-label="Navigasi">
                 <a href="{{ route('dashboard') }}">Dashboard</a>
                 <a href="{{ route('payments.index') }}">Pembayaran</a>
@@ -110,7 +110,7 @@
             </section>
         </main>
 
-        <footer>&copy; 2026 Kedai Smart Pinky</footer>
+        <footer>&copy; 2026 KOPI-BOY</footer>
     </div>
 </body>
 </html>

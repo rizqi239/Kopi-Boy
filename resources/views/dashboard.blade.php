@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
    
-    <title>Dashboard - Kedai Smart Brew</title>
+    <title>Dashboard - KOPI-BOY</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -155,8 +155,8 @@
                     <svg fill="currentColor" viewBox="0 0 24 24"><path d="M3 3h2v7H3zm4 0h2v7H7zm4 0h2v7h-2zm3 0h2v7h-2zm3 0h2v7h-2zm-5 9h6v2a5 5 0 0 1-4 4.9V21h-2v-2.1A5 5 0 0 1 8 14v-2h4zM6 5h1v7a6 6 0 0 0 2 4.5V21H7v-3.5A8 8 0 0 1 5 12V5h1zm12 0h1v7a8 8 0 0 1-2 5.5V21h-2v-4.5a6 6 0 0 0 2-4.5V5h1z"/></svg>
                 </div>
                 <div>
-                    <h1 class="brand-title">Kedai Smart Pinky</h1>
-                    <p class="brand-caption">Kedai Smart Pinky — Point of Sale</p>
+                    <h1 class="brand-title">KOPI-BOY</h1>
+                    <p class="brand-caption">KOPI-BOY — Point of Sale</p>
                 </div>
             </div>
 
@@ -514,7 +514,7 @@
         })();
     </script>
 
-    <footer class="pos-footer">&copy; Kedai Smart Pinky</footer>
+    <footer class="pos-footer">&copy; KOPI-BOY</footer>
     </div>
 </body>
 </html>

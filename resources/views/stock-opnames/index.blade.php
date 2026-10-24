@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="theme-color" content="#321b10">
-    <title>Stock Opname - Kedai Smart Pinky</title>
+    <title>Stock Opname - KOPI-BOY</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -74,7 +74,7 @@
 <body>
     <main class="opname-shell">
         <header class="opname-header">
-            <a class="opname-brand" href="{{ route('dashboard') }}">Kedai Smart Pinky</a>
+            <a class="opname-brand" href="{{ route('dashboard') }}">KOPI-BOY</a>
             <nav class="opname-nav" aria-label="Navigasi stock opname">
                 <a href="{{ route('management.index') }}">Manajemen</a>
                 <a href="{{ route('dashboard') }}">Dashboard</a>

@@ -25,7 +25,7 @@
   </main>
 
   <footer class="max-w-7xl mx-auto py-10 px-6 border-t border-slate-100">
-    <div class="flex justify-between items-center text-slate-400"><p class="text-xs font-bold">&copy; 2026 Kedai Pinky Smart</p></div>
+    <div class="flex justify-between items-center text-slate-400"><p class="text-xs font-bold">&copy; 2026 KOPI-BOY</p></div>
   </footer>
 
   @stack('scripts')

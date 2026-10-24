@@ -4,7 +4,7 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="theme-color" content="#14110e">
-    <title>Daftar | Kedai Smart Pinky</title>
+    <title>Daftar | KOPI-BOY</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Caveat:wght@600;700&family=DM+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
@@ -90,9 +90,9 @@
 </head>
 <body>
     <header class="topbar">
-        <a class="brand" href="{{ url('/') }}" aria-label="Kedai Smart Pinky">
-            <span class="brand-mark" aria-hidden="true">KP</span>
-            <span class="brand-name"><small>KEDAI</small><strong>Smart Pinky</strong></span>
+        <a class="brand" href="{{ url('/') }}" aria-label="KOPI-BOY">
+            <span class="brand-mark" aria-hidden="true">KB</span>
+            <span class="brand-name"><small>KEDAI</small><strong>KOPI-BOY</strong></span>
         </a>
         <nav class="navigation" aria-label="Navigasi utama">
             <a href="{{ url('/') }}">Beranda</a>
@@ -106,12 +106,12 @@
             <div class="hero-content">
                 <div class="intro">
                     <p class="eyebrow">KOPI PILIHAN · SUASANA HANGAT · CERITA BARU</p>
-                    <h1 id="welcome-title">Jadi bagian dari <span>Kedai Pinky</span></h1>
-                    <p class="intro-copy">Buat akun untuk menikmati pengalaman dan layanan Kedai Pinky.</p>
+                    <h1 id="welcome-title">Jadi bagian dari <span>KOPI-BOY</span></h1>
+                    <p class="intro-copy">Buat akun untuk menikmati pengalaman dan layanan KOPI-BOY.</p>
                 </div>
 
                 <section class="login-panel" aria-labelledby="register-title">
-                    <p class="panel-kicker">Akun Kedai Pinky</p>
+                    <p class="panel-kicker">Akun KOPI-BOY</p>
                     <h2 id="register-title">Buat akun baru</h2>
                     <p class="panel-copy">Silakan isi data berikut untuk mendaftar.</p>
 
@@ -157,7 +157,7 @@
             </div>
         </section>
 
-        <section class="highlights" aria-label="Keunggulan Kedai Pinky">
+        <section class="highlights" aria-label="Keunggulan KOPI-BOY">
             <div class="highlight">
                 <span class="highlight-mark" aria-hidden="true">01</span>
                 <div><strong>Kopi pilihan</strong><span>Diracik dari bahan berkualitas.</span></div>

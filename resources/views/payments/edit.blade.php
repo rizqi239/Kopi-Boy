@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="theme-color" content="#321b10">
-    <title>Edit Pembayaran - Kedai Smart Pinky</title>
+    <title>Edit Pembayaran - KOPI-BOY</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <script defer src="https://unpkg.com/alpinejs@3.x.x/dist/cdn.min.js"></script>
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -96,7 +96,7 @@
 <body x-data="{
     selectedMethod: @js(strtolower(old('method', $payment->method))),
     akun: {
-        qris: { nama: 'Kedai Pinky Smart', nomor: 'Scan QR di bawah' },
+        qris: { nama: 'KOPI-BOY', nomor: 'Scan QR di bawah' },
         ewallet: { nama: 'Rizqi Ramadhan', nomor: 'DANA: 0812XXXXXX' },
         transfer: { nama: 'Rizqi Ramadhan', nomor: 'BSI: 7123XXXXXX' },
         cash: { nama: '-', nomor: 'Bayar di Kasir' }
@@ -104,13 +104,13 @@
 }">
     <div class="pos-shell">
         <header class="pos-header">
-            <a class="brand" href="{{ route('dashboard') }}" aria-label="Kedai Smart Pinky dashboard">
+            <a class="brand" href="{{ route('dashboard') }}" aria-label="KOPI-BOY dashboard">
                 <span class="brand-mark" aria-hidden="true">
                     <svg fill="currentColor" viewBox="0 0 24 24"><path d="M3 3h2v7H3zm4 0h2v7H7zm4 0h2v7h-2zm3 0h2v7h-2zm3 0h2v7h-2zm-5 9h6v2a5 5 0 0 1-4 4.9V21h-2v-2.1A5 5 0 0 1 8 14v-2h4zM6 5h1v7a6 6 0 0 0 2 4.5V21H7v-3.5A8 8 0 0 1 5 12V5h1zm12 0h1v7a8 8 0 0 1-2 5.5V21h-2v-4.5a6 6 0 0 0 2-4.5V5h1z"/></svg>
                 </span>
                 <span>
-                    <span class="brand-title">Kedai Smart Pinky</span>
-                    <span class="brand-caption">Kedai Smart Pinky — Point of Sale</span>
+                    <span class="brand-title">KOPI-BOY</span>
+                    <span class="brand-caption">KOPI-BOY — Point of Sale</span>
                 </span>
             </a>
 
@@ -188,7 +188,7 @@
 
                     <div class="payment-info" x-show="selectedMethod !== 'cash'" x-cloak x-transition>
                         <div x-show="selectedMethod === 'qris'" class="qr-frame">
-                            <img src="https://api.qrserver.com/v1/create-qr-code/?size=150x150&data=KEDAI-PINKY-SMART" alt="QRIS pembayaran">
+                            <img src="https://api.qrserver.com/v1/create-qr-code/?size=150x150&data=KOPI-BOY" alt="QRIS pembayaran">
                         </div>
                         <span class="payment-info-label" x-text="selectedMethod"></span>
                         <span class="payment-info-number" x-text="akun[selectedMethod]?.nomor"></span>
@@ -210,7 +210,7 @@
             </form>
         </main>
 
-        <footer class="pos-footer">&copy; Kedai Smart Pinky</footer>
+        <footer class="pos-footer">&copy; KOPI-BOY</footer>
     </div>
 
     <script>
