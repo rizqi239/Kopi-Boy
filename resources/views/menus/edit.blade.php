@@ -179,15 +179,17 @@
 
         <div class="field full">
           <label for="image">Gambar Menu</label>
-          @if($menu->image)
-            <div class="image-preview-card">
-              <img src="{{ asset('storage/' . $menu->image) }}" alt="{{ $menu->name }}" class="image-preview-thumb" onerror="this.onerror=null; this.src='{{ asset('image/coffee-login.jpg') }}';">
-              <div class="image-preview-info">
-                <strong>Foto Saat Ini</strong>
-                <span>Pilih file baru di bawah ini jika ingin mengganti gambar produk.</span>
+          <div id="image-preview-wrapper">
+            @if($menu->image)
+              <div class="image-preview-card">
+                <img id="current-image-preview" src="{{ $menu->image_url }}" alt="{{ $menu->name }}" class="image-preview-thumb" onerror="this.onerror=null; this.src='{{ asset('image/coffee-login.jpg') }}';">
+                <div class="image-preview-info">
+                  <strong>Foto Saat Ini</strong>
+                  <span>Pilih file baru di bawah ini jika ingin mengganti gambar produk.</span>
+                </div>
               </div>
-            </div>
-          @endif
+            @endif
+          </div>
           <input id="image" type="file" name="image" accept=".jpg,.jpeg,.png,.webp,.gif,image/jpeg,image/png,image/webp,image/gif">
         </div>
 
@@ -213,6 +215,34 @@
     };
     updateClock();
     setInterval(updateClock, 1000);
+
+    const imageInput = document.getElementById('image');
+    if (imageInput) {
+      imageInput.addEventListener('change', function(e) {
+        const file = e.target.files && e.target.files[0];
+        if (file) {
+          const reader = new FileReader();
+          reader.onload = function(evt) {
+            let previewImg = document.getElementById('current-image-preview');
+            let previewWrapper = document.getElementById('image-preview-wrapper');
+            if (previewImg) {
+              previewImg.src = evt.target.result;
+            } else if (previewWrapper) {
+              previewWrapper.innerHTML = `
+                <div class="image-preview-card">
+                  <img id="current-image-preview" src="${evt.target.result}" alt="Preview" class="image-preview-thumb">
+                  <div class="image-preview-info">
+                    <strong>Foto Dipilih (Baru)</strong>
+                    <span>Foto ini akan disimpan saat Anda klik Simpan Perubahan.</span>
+                  </div>
+                </div>
+              `;
+            }
+          };
+          reader.readAsDataURL(file);
+        }
+      });
+    }
   </script>
   @stack('scripts')
 </body>

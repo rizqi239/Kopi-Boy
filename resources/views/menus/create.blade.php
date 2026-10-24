@@ -173,6 +173,7 @@
 
         <div class="field full">
           <label for="image">Gambar Menu</label>
+          <div id="image-preview-wrapper"></div>
           <input id="image" type="file" name="image" accept=".jpg,.jpeg,.png,.webp,.gif,image/jpeg,image/png,image/webp,image/gif">
         </div>
 
@@ -198,6 +199,31 @@
     };
     updateClock();
     setInterval(updateClock, 1000);
+
+    const imageInput = document.getElementById('image');
+    if (imageInput) {
+      imageInput.addEventListener('change', function(e) {
+        const file = e.target.files && e.target.files[0];
+        if (file) {
+          const reader = new FileReader();
+          reader.onload = function(evt) {
+            let previewWrapper = document.getElementById('image-preview-wrapper');
+            if (previewWrapper) {
+              previewWrapper.innerHTML = `
+                <div style="display:flex;align-items:center;gap:14px;margin-bottom:10px;padding:10px 14px;background:#ede3d1;border:1px solid #ddceba;border-radius:9px;">
+                  <img src="${evt.target.result}" alt="Preview" style="width:64px;height:64px;border-radius:7px;object-fit:cover;border:1px solid #c7b8a5;background:#e0d2bf;">
+                  <div style="font-size:12px;color:#583c27;">
+                    <strong style="display:block;margin-bottom:2px;">Foto Terpilih</strong>
+                    <span>Foto ini akan disimpan saat Anda klik Simpan Menu.</span>
+                  </div>
+                </div>
+              `;
+            }
+          };
+          reader.readAsDataURL(file);
+        }
+      });
+    }
   </script>
   @stack('scripts')
 </body>

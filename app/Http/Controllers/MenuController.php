@@ -60,8 +60,7 @@ class MenuController extends Controller
 
         // Proses upload gambar jika ada
         if ($request->hasFile('image')) {
-            $path = $request->file('image')->store('menus', 'public');
-            $data['image'] = $path;
+            $data['image'] = $this->processUploadedImage($request->file('image'));
         }
 
         Menu::create($data);
@@ -97,8 +96,8 @@ class MenuController extends Controller
 
         // Proses update gambar baru
         if ($request->hasFile('image')) {
-            // Hapus gambar lama dari storage jika ada
-            if ($menu->image) {
+            // Hapus gambar lama dari storage jika sebelumnya berupa path file fisik
+            if ($menu->image && !str_starts_with($menu->image, 'data:')) {
                 try {
                     Storage::disk('public')->delete($menu->image);
                 } catch (\Throwable $e) {
@@ -106,8 +105,8 @@ class MenuController extends Controller
                 }
             }
             
-            // Simpan gambar baru
-            $data['image'] = $request->file('image')->store('menus', 'public');
+            // Simpan gambar baru sebagai data URI terkompresi
+            $data['image'] = $this->processUploadedImage($request->file('image'));
         }
 
         $menu->update($data);
@@ -122,8 +121,8 @@ class MenuController extends Controller
     {
         $this->authorizeAdmin();
 
-        // Hapus file fisik gambar dari folder storage agar tidak menumpuk
-        if ($menu->image) {
+        // Hapus file fisik gambar jika berupa path file
+        if ($menu->image && !str_starts_with($menu->image, 'data:')) {
             try {
                 Storage::disk('public')->delete($menu->image);
             } catch (\Throwable $e) {
@@ -134,5 +133,54 @@ class MenuController extends Controller
         $menu->delete();
 
         return back()->with('success', 'Menu dan gambar terkait berhasil dihapus.');
+    }
+
+    /**
+     * Memproses file upload gambar menjadi base64 yang terkompresi
+     * agar tersimpan permanen di database tanpa bergantung pada filesystem serverless.
+     */
+    protected function processUploadedImage(\Illuminate\Http\UploadedFile $file): string
+    {
+        $mime = $file->getMimeType() ?: 'image/jpeg';
+        $content = file_get_contents($file->getRealPath());
+
+        // Kompres & resize gambar jika ekstensi GD tersedia
+        if (extension_loaded('gd') && function_exists('imagecreatefromstring')) {
+            try {
+                $img = @imagecreatefromstring($content);
+                if ($img !== false) {
+                    $origWidth = imagesx($img);
+                    $origHeight = imagesy($img);
+                    $maxDim = 800; // Ukuran optimal untuk POS & Web (tajam dan sangat ringan)
+
+                    if ($origWidth > $maxDim || $origHeight > $maxDim) {
+                        if ($origWidth > $origHeight) {
+                            $newWidth = $maxDim;
+                            $newHeight = (int) ($origHeight * ($maxDim / $origWidth));
+                        } else {
+                            $newHeight = $maxDim;
+                            $newWidth = (int) ($origWidth * ($maxDim / $origHeight));
+                        }
+
+                        $resized = imagecreatetruecolor($newWidth, $newHeight);
+                        imagealphablending($resized, false);
+                        imagesavealpha($resized, true);
+                        imagecopyresampled($resized, $img, 0, 0, 0, 0, $newWidth, $newHeight, $origWidth, $origHeight);
+                        imagedestroy($img);
+                        $img = $resized;
+                    }
+
+                    ob_start();
+                    imagejpeg($img, null, 80);
+                    $content = ob_get_clean();
+                    $mime = 'image/jpeg';
+                    imagedestroy($img);
+                }
+            } catch (\Throwable $e) {
+                // Gunakan file asli jika proses kompresi GD gagal
+            }
+        }
+
+        return 'data:' . $mime . ';base64,' . base64_encode($content);
     }
 }

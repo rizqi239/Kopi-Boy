@@ -14,6 +14,22 @@ class Menu extends Model
     ];
 
     /**
+     * Mendapatkan URL gambar yang siap ditampilkan (data URI base64 atau path file storage).
+     */
+    public function getImageUrlAttribute(): ?string
+    {
+        if (!$this->image) {
+            return null;
+        }
+
+        if (str_starts_with($this->image, 'data:') || str_starts_with($this->image, 'http://') || str_starts_with($this->image, 'https://')) {
+            return $this->image;
+        }
+
+        return asset('storage/' . $this->image);
+    }
+
+    /**
      * Mengelompokkan menu ke grup filter: kopi, non-kopi, pastry
      */
     public function getCategoryGroupAttribute(): string

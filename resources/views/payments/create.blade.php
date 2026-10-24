@@ -250,7 +250,7 @@
                                     <article class="menu-card">
                                         <div class="menu-card-image">
                                             @if($menu->image)
-                                                <img src="{{ asset('storage/' . $menu->image) }}" alt="{{ $menu->name }}" onerror="this.onerror=null; this.src='{{ asset('image/coffee-login.jpg') }}';">
+                                                <img src="{{ $menu->image_url }}" alt="{{ $menu->name }}" onerror="this.onerror=null; this.src='{{ asset('image/coffee-login.jpg') }}';">
                                             @else
                                                 <div class="menu-card-image"></div>
                                             @endif

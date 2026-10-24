@@ -38,8 +38,17 @@ if (file_exists($maintenance = __DIR__.'/../storage/framework/maintenance.php'))
 
 // Bootstrap Laravel
 /** @var \Illuminate\Foundation\Application $app */
-$app = require_once __DIR__.'/../bootstrap/app.php';
 $app->useStoragePath($storagePath);
+
+// Jalankan migrasi database jika belum dijalankan pada instance ini
+if (!file_exists('/tmp/migrated.lock')) {
+    try {
+        \Illuminate\Support\Facades\Artisan::call('migrate', ['--force' => true]);
+        @touch('/tmp/migrated.lock');
+    } catch (\Throwable $e) {
+        error_log("Auto-migrate note: " . $e->getMessage());
+    }
+}
 
 try {
     $app->handleRequest(Request::capture());
