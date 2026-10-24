@@ -37,7 +37,7 @@
         .category-row { min-height: 44px; margin-bottom: 16px; display: flex; align-items: center; justify-content: space-between; gap: 14px; flex-wrap: wrap; }
         .category-tabs { min-width: 0; display: flex; align-items: center; gap: 10px; overflow-x: auto; scrollbar-width: none; padding: 4px 2px; }
         .category-tabs::-webkit-scrollbar { display: none; }
-        .category-tab { min-height: 42px; padding: 0 20px; display: inline-flex; align-items: center; justify-content: center; flex: 0 0 auto; color: #3a2518; background: #f5edda; border: 1px solid rgba(255, 255, 255, 0.65); border-radius: 999px; font-size: 14px; font-weight: 700; text-decoration: none; white-space: nowrap; box-shadow: 0 3px 10px rgba(0, 0, 0, 0.12); transition: all 180ms cubic-bezier(0.4, 0, 0.2, 1); }
+        .category-tab { min-height: 42px; padding: 0 20px; display: inline-flex; align-items: center; justify-content: center; flex: 0 0 auto; color: #3a2518; background: #f5edda; border: 1px solid rgba(255, 255, 255, 0.65); border-radius: 999px; font: inherit; font-size: 14px; font-weight: 700; text-decoration: none; white-space: nowrap; box-shadow: 0 3px 10px rgba(0, 0, 0, 0.12); transition: all 180ms cubic-bezier(0.4, 0, 0.2, 1); cursor: pointer; }
         .category-tab:hover { color: #23140c; background: #fff5e3; transform: translateY(-2px); box-shadow: 0 6px 16px rgba(0, 0, 0, 0.18); }
         .category-tab.active { color: #ffffff; background: linear-gradient(135deg, #7c4827 0%, #522d17 100%); border-color: rgba(255, 225, 190, 0.4); box-shadow: 0 4px 14px rgba(70, 36, 17, 0.45); transform: none; }
         .result-count { flex: 0 0 auto; display: inline-flex; align-items: center; gap: 6px; padding: 6px 14px; color: #f2e3d3; background: rgba(35, 19, 11, 0.6); border: 1px solid rgba(255, 255, 255, 0.15); border-radius: 999px; font-size: 12px; font-weight: 600; backdrop-filter: blur(6px); }
@@ -190,13 +190,12 @@
                 <div class="catalog-toolbar">
                     <div class="category-row">
                         <nav class="category-tabs" aria-label="Kategori menu">
-                            <a href="{{ route('dashboard') }}" class="category-tab {{ empty($category) ? 'active' : '' }}">Semua</a>
-                            <a href="{{ route('dashboard', ['category' => 'Coffee']) }}" class="category-tab {{ $category === 'Coffee' ? 'active' : '' }}">Coffee</a>
-                            <a href="{{ route('dashboard', ['category' => 'Non-Coffee']) }}" class="category-tab {{ $category === 'Non-Coffee' ? 'active' : '' }}">Non-Coffee</a>
-                            <a href="{{ route('dashboard', ['category' => 'Pastry & Snack']) }}" class="category-tab {{ $category === 'Pastry & Snack' ? 'active' : '' }}">Pastry &amp; Snack</a>
-                            <a href="{{ route('dashboard', ['category' => 'Beans']) }}" class="category-tab {{ $category === 'Beans' ? 'active' : '' }}">Beans</a>
+                            <button type="button" data-filter="all" class="category-tab active">Semua</button>
+                            <button type="button" data-filter="kopi" class="category-tab">Kopi</button>
+                            <button type="button" data-filter="non-kopi" class="category-tab">Non Kopi</button>
+                            <button type="button" data-filter="pastry" class="category-tab">Pastry</button>
                         </nav>
-                        <div class="result-count">Menampilkan: <strong>{{ $category ?? 'Semua' }}</strong></div>
+                        <div class="result-count">Menampilkan: <strong id="filter-display-label">Semua</strong></div>
                     </div>
 
                     <input id="search" type="search" placeholder="Cari menu favorit pelanggan..." class="menu-search" aria-label="Cari menu">
@@ -204,7 +203,7 @@
 
                 <div id="products" class="product-grid">
                     @forelse($latestMenus ?? [] as $menu)
-                        <article class="menu-card">
+                        <article class="menu-card" data-category="{{ $menu->category_group }}" data-name="{{ strtolower($menu->name) }}" data-cat-name="{{ strtolower($menu->category ?? '') }}">
                             <div class="product-image">
                                 @if($menu->image)
                                     <img src="{{ asset('storage/' . $menu->image) }}" alt="{{ $menu->name }}">
@@ -237,6 +236,8 @@
                     @empty
                         <div class="empty-products">Menu belum tersedia. Tambahkan menu untuk mulai membuat pesanan.</div>
                     @endforelse
+
+                    <div id="empty-filter-msg" class="empty-products" style="display: none; grid-column: 1 / -1;">Tidak ada menu yang sesuai dengan kategori ini.</div>
                 </div>
             </section>
 
@@ -415,28 +416,69 @@
                 document.querySelector('.cart-panel').scrollIntoView({ behavior: 'smooth', block: 'start' });
             });
 
-            const search = document.getElementById('search');
-            if(search) search.addEventListener('input', (e) => {
-                const q = e.target.value.toLowerCase();
-                document.querySelectorAll('#products > div').forEach(card => {
-                    const name = (card.querySelector('h3')?.innerText || '').toLowerCase();
-                    card.style.display = name.includes(q) ? 'flex' : 'none';
+            // Filter Kategori & Search Produk
+            const categoryTabs = document.querySelectorAll('.category-tab[data-filter]');
+            const filterLabel = document.getElementById('filter-display-label');
+            const searchInput = document.getElementById('search');
+            const productCards = document.querySelectorAll('#products .menu-card');
+            const emptyFilterMsg = document.getElementById('empty-filter-msg');
+            let activeFilter = 'all';
+
+            function applyProductFilter() {
+                const query = (searchInput?.value || '').toLowerCase().trim();
+                let visibleCount = 0;
+
+                productCards.forEach(card => {
+                    const cardCatGroup = card.getAttribute('data-category') || '';
+                    const cardCatName = card.getAttribute('data-cat-name') || '';
+                    const cardName = card.getAttribute('data-name') || '';
+
+                    let matchesCategory = false;
+                    if (activeFilter === 'all') {
+                        matchesCategory = true;
+                    } else if (activeFilter === 'kopi') {
+                        matchesCategory = (cardCatGroup === 'kopi' || cardCatName.includes('kopi') || cardCatName.includes('coffee'));
+                    } else if (activeFilter === 'non-kopi') {
+                        matchesCategory = (cardCatGroup === 'non-kopi' || cardCatName.includes('non'));
+                    } else if (activeFilter === 'pastry') {
+                        matchesCategory = (cardCatGroup === 'pastry' || cardCatName.includes('pastry') || cardCatName.includes('snack') || cardCatName.includes('makanan'));
+                    }
+
+                    const matchesSearch = !query || cardName.includes(query) || cardCatName.includes(query);
+
+                    if (matchesCategory && matchesSearch) {
+                        card.style.display = 'flex';
+                        visibleCount++;
+                    } else {
+                        card.style.display = 'none';
+                    }
+                });
+
+                if (emptyFilterMsg) {
+                    emptyFilterMsg.style.display = (visibleCount === 0 && productCards.length > 0) ? 'block' : 'none';
+                }
+            }
+
+            categoryTabs.forEach(tab => {
+                tab.addEventListener('click', () => {
+                    categoryTabs.forEach(t => t.classList.remove('active'));
+                    tab.classList.add('active');
+                    activeFilter = tab.getAttribute('data-filter') || 'all';
+
+                    if (filterLabel) {
+                        filterLabel.textContent = tab.textContent.trim();
+                    }
+
+                    applyProductFilter();
                 });
             });
 
+            if (searchInput) {
+                searchInput.addEventListener('input', applyProductFilter);
+            }
+
             function updateClock(){
                 const el = document.getElementById('current-datetime');
-                if(el) el.textContent = new Date().toLocaleTimeString('id-ID', { hour: '2-digit', minute: '2-digit', second: '2-digit' });
-            }
-            setInterval(updateClock, 1000); updateClock();
-            renderCart();
-        })();
-    </script>
-
-    <footer class="pos-footer">&copy; Kedai Smart Pinky</footer>
-    </div>
-</body>
-</html>    const el = document.getElementById('current-datetime');
                 if(el) el.textContent = new Date().toLocaleTimeString('id-ID', { hour: '2-digit', minute: '2-digit', second: '2-digit' });
             }
             setInterval(updateClock, 1000); updateClock();

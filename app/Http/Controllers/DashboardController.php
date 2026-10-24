@@ -24,12 +24,8 @@ class DashboardController extends Controller
             'pelanggan' => User::where('role', 'pelanggan')->count(),
         ];
 
-        $category = $request->get('category');
-        $latestMenusQuery = Menu::latest();
-        if ($category) {
-            $latestMenusQuery->where('category', $category);
-        }
-        $latestMenus = $latestMenusQuery->limit(8)->get();
+        $category = $request->get('category', 'all');
+        $latestMenus = Menu::latest()->get();
 
         $recentOrders = Order::with('user')->latest()->limit(6)->get();
         $recentPayments = Payment::latest()->limit(6)->get();
