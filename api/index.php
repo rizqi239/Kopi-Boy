@@ -41,22 +41,6 @@ if (file_exists($maintenance = __DIR__.'/../storage/framework/maintenance.php'))
 $app = require_once __DIR__.'/../bootstrap/app.php';
 $app->useStoragePath($storagePath);
 
-// Pastikan kolom image bertipe text di database
-if (!file_exists('/tmp/migrated.lock')) {
-    try {
-        $db = $app->make('db');
-        $driver = $db->connection()->getDriverName();
-        if ($driver === 'pgsql') {
-            $db->statement('ALTER TABLE menus ALTER COLUMN image TYPE text');
-        } elseif ($driver === 'mysql' || $driver === 'mariadb') {
-            $db->statement('ALTER TABLE menus MODIFY image LONGTEXT NULL');
-        }
-        @touch('/tmp/migrated.lock');
-    } catch (\Throwable $e) {
-        error_log("DB update note: " . $e->getMessage());
-    }
-}
-
 try {
     $app->handleRequest(Request::capture());
 } catch (\Throwable $e) {

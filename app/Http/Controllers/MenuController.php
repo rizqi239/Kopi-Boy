@@ -5,8 +5,6 @@ namespace App\Http\Controllers;
 use App\Models\Menu;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
-use Illuminate\Support\Facades\DB;
-use Illuminate\Database\QueryException;
 
 class MenuController extends Controller
 {
@@ -67,21 +65,7 @@ class MenuController extends Controller
             unset($data['image']);
         }
 
-        try {
-            Menu::create($data);
-        } catch (QueryException $e) {
-            if (str_contains($e->getMessage(), 'too long') || str_contains($e->getMessage(), '22001')) {
-                $driver = DB::getDriverName();
-                if ($driver === 'pgsql') {
-                    DB::statement('ALTER TABLE menus ALTER COLUMN image TYPE text');
-                } elseif ($driver === 'mysql' || $driver === 'mariadb') {
-                    DB::statement('ALTER TABLE menus MODIFY image LONGTEXT NULL');
-                }
-                Menu::create($data);
-            } else {
-                throw $e;
-            }
-        }
+        Menu::create($data);
 
         return redirect()->route('menus.index')->with('success', 'Menu berhasil ditambahkan.');
     }
@@ -130,21 +114,7 @@ class MenuController extends Controller
             unset($data['image']);
         }
 
-        try {
-            $menu->update($data);
-        } catch (QueryException $e) {
-            if (str_contains($e->getMessage(), 'too long') || str_contains($e->getMessage(), '22001')) {
-                $driver = DB::getDriverName();
-                if ($driver === 'pgsql') {
-                    DB::statement('ALTER TABLE menus ALTER COLUMN image TYPE text');
-                } elseif ($driver === 'mysql' || $driver === 'mariadb') {
-                    DB::statement('ALTER TABLE menus MODIFY image LONGTEXT NULL');
-                }
-                $menu->update($data);
-            } else {
-                throw $e;
-            }
-        }
+        $menu->update($data);
 
         return redirect()->route('menus.index')->with('success', 'Menu berhasil diperbarui.');
     }
