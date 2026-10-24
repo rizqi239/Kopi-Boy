@@ -65,237 +65,144 @@
             .workflow { grid-column: 1 / -1; grid-row: 2; justify-self: center; }
             .header-tools { grid-column: 2; grid-row: 1; }
         }
-        /* Filter Panel Styles */
+        /* Clean & Compact Filter Panel */
         .payments-filter-panel {
-            margin-bottom: 22px;
-            padding: 20px 22px;
+            margin-bottom: 18px;
+            padding: 12px 16px;
             background: var(--cream);
-            border: 1px solid rgb(255 255 255 / 80%);
-            border-radius: 16px;
-            box-shadow: 0 10px 30px rgb(0 0 0 / 14%);
+            border: 1px solid rgb(255 255 255 / 85%);
+            border-radius: 14px;
+            box-shadow: 0 4px 16px rgb(0 0 0 / 7%);
             display: flex;
             flex-direction: column;
-            gap: 15px;
+            gap: 10px;
         }
         .filter-controls-row {
             display: flex;
             align-items: center;
-            gap: 12px;
+            gap: 10px;
             flex-wrap: wrap;
         }
         .search-input-wrap {
             position: relative;
-            flex: 1 1 320px;
-            min-width: 240px;
+            flex: 1 1 240px;
+            min-width: 180px;
         }
         .search-input-icon {
             position: absolute;
-            left: 14px;
+            left: 12px;
             top: 50%;
             transform: translateY(-50%);
-            width: 17px;
-            height: 17px;
+            width: 15px;
+            height: 15px;
             color: #8b7561;
             pointer-events: none;
         }
         .filter-search-input {
             width: 100%;
-            min-height: 44px;
-            padding: 0 14px 0 42px;
+            min-height: 38px;
+            padding: 0 12px 0 34px;
             color: var(--ink);
             background: #fffaf0;
-            border: 1px solid #dfd2c0;
-            border-radius: 10px;
+            border: 1px solid #dcd1c2;
+            border-radius: 9px;
             font: inherit;
-            font-size: 13px;
+            font-size: 12.5px;
             outline: none;
-            transition: all 160ms ease;
+            transition: all 140ms ease;
         }
         .filter-search-input:focus {
-            border-color: #7b4522;
+            border-color: #63381e;
             background: #fff;
-            box-shadow: 0 0 0 3px rgb(123 69 34 / 16%);
+            box-shadow: 0 0 0 2px rgb(99 56 30 / 12%);
         }
         .filter-select-wrap {
-            flex: 0 1 280px;
-            min-width: 200px;
+            flex: 0 1 230px;
+            min-width: 170px;
         }
         .filter-select {
             width: 100%;
-            min-height: 44px;
-            padding: 0 14px;
+            min-height: 38px;
+            padding: 0 10px;
             color: #3b281b;
             background: #fffaf0;
-            border: 1px solid #dfd2c0;
-            border-radius: 10px;
+            border: 1px solid #dcd1c2;
+            border-radius: 9px;
             font: inherit;
-            font-size: 13px;
+            font-size: 12px;
             font-weight: 600;
             outline: none;
             cursor: pointer;
-            transition: all 160ms ease;
+            transition: all 140ms ease;
         }
         .filter-select:focus {
-            border-color: #7b4522;
+            border-color: #63381e;
             background: #fff;
         }
         .btn-reset-filter {
-            min-height: 44px;
-            padding: 0 16px;
+            min-height: 38px;
+            padding: 0 12px;
             display: inline-flex;
             align-items: center;
             justify-content: center;
-            gap: 6px;
+            gap: 5px;
             color: #63432b;
             background: #ede0cb;
             border: 1px solid #ded0ba;
-            border-radius: 10px;
+            border-radius: 9px;
             font: inherit;
-            font-size: 12px;
+            font-size: 11.5px;
             font-weight: 700;
             cursor: pointer;
-            transition: all 150ms ease;
+            transition: all 140ms ease;
             white-space: nowrap;
         }
         .btn-reset-filter:hover {
-            background: #e2d2ba;
-            color: #382417;
+            background: #dfd0bb;
+            color: #311c0f;
         }
-        .category-tabs-row {
-            display: flex;
-            align-items: center;
-            gap: 8px;
-            flex-wrap: wrap;
-        }
-        .cat-tab-label {
-            font-size: 11px;
-            font-weight: 800;
-            color: #856a52;
-            text-transform: uppercase;
-            letter-spacing: 0.6px;
-            margin-right: 4px;
-        }
-        .cat-filter-tab {
-            padding: 8px 16px;
-            background: #eee2d1;
-            color: #493323;
-            border: 1px solid rgb(255 255 255 / 60%);
-            border-radius: 999px;
-            font-size: 12.5px;
-            font-weight: 700;
-            cursor: pointer;
-            transition: all 160ms ease;
-            white-space: nowrap;
-        }
-        .cat-filter-tab:hover {
-            background: #dfcfbc;
-        }
-        .cat-filter-tab.active {
-            background: #4b2b19;
-            color: #fffaf1;
-            border-color: #4b2b19;
-            box-shadow: 0 3px 10px rgb(75 43 25 / 25%);
-        }
-        .pills-scroll-wrapper {
-            display: flex;
-            align-items: center;
-            gap: 8px;
-            overflow-x: auto;
-            padding-bottom: 4px;
-            scrollbar-width: thin;
-            scrollbar-color: #c9b69e transparent;
-        }
-        .pills-scroll-wrapper::-webkit-scrollbar {
-            height: 4px;
-        }
-        .pills-scroll-wrapper::-webkit-scrollbar-thumb {
-            background: #c9b69e;
-            border-radius: 999px;
-        }
-        .pills-label {
-            font-size: 11px;
-            font-weight: 800;
-            color: #856a52;
-            text-transform: uppercase;
-            letter-spacing: 0.6px;
-            white-space: nowrap;
-            margin-right: 2px;
-        }
-        .product-pill {
-            padding: 6px 14px;
-            background: #fffaf2;
-            color: #553b27;
-            border: 1px solid #dccdb7;
-            border-radius: 999px;
-            font-size: 12px;
-            font-weight: 700;
-            cursor: pointer;
-            white-space: nowrap;
-            transition: all 150ms ease;
+        .count-badge-wrap {
+            margin-left: auto;
             display: inline-flex;
+            align-items: center;
+            padding: 5px 11px;
+            background: #e2f0de;
+            color: #215933;
+            border-radius: 8px;
+            font-size: 11px;
+            font-weight: 800;
+            white-space: nowrap;
+        }
+        .quick-pills-row {
+            display: flex;
             align-items: center;
             gap: 6px;
-        }
-        .product-pill:hover {
-            background: #f5e9d5;
-            border-color: #bfa588;
-            transform: translateY(-1px);
-        }
-        .product-pill.active {
-            background: #6d3f22;
-            color: #fff9f0;
-            border-color: #6d3f22;
-            box-shadow: 0 3px 8px rgb(109 63 34 / 30%);
-            transform: translateY(-1px);
-        }
-        .filter-status-row {
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            gap: 12px;
-            padding-top: 10px;
-            border-top: 1px solid #e7dcce;
-            font-size: 12px;
-            color: #705844;
             flex-wrap: wrap;
         }
-        .filter-status-info {
-            display: flex;
-            align-items: center;
-            gap: 7px;
-            flex-wrap: wrap;
-        }
-        .filter-badge-active {
+        .quick-pill {
+            padding: 5px 12px;
+            background: #fffaf2;
+            color: #553e2b;
+            border: 1px solid #dcd1c2;
+            border-radius: 999px;
+            font-size: 11.5px;
+            font-weight: 600;
+            cursor: pointer;
+            white-space: nowrap;
+            transition: all 140ms ease;
             display: inline-flex;
             align-items: center;
-            gap: 5px;
-            padding: 4px 10px;
-            background: #e2d2bd;
-            color: #3b2516;
-            border-radius: 6px;
-            font-weight: 800;
+            gap: 4px;
         }
-        .filter-count-badge {
-            padding: 4px 10px;
-            background: #d6e8d2;
-            color: #1e5a32;
-            border-radius: 6px;
-            font-weight: 800;
-            font-size: 11.5px;
+        .quick-pill:hover {
+            background: #f4e8d4;
+            border-color: #bfa588;
         }
-        .btn-clear-inline {
-            color: #8b312a;
-            font-weight: 700;
-            background: none;
-            border: none;
-            padding: 0;
-            cursor: pointer;
-            text-decoration: underline;
-            text-underline-offset: 2px;
-            font-size: 11.5px;
-        }
-        .btn-clear-inline:hover {
-            color: #581611;
+        .quick-pill.active {
+            background: #4b2b19;
+            color: #fffaf0;
+            border-color: #4b2b19;
+            box-shadow: 0 2px 6px rgb(75 43 25 / 20%);
         }
         @media (max-width: 620px) {
             .pos-shell { padding: 10px; }
@@ -304,7 +211,7 @@
             .brand-mark { width: 42px; height: 42px; }
             .brand-mark svg { width: 24px; height: 24px; }
             .brand-title { font-size: 15px; letter-spacing: 0.6px; }
-            .brand-caption { font-size: 8px; letter-spacing: 0.6px; }
+            .brand-caption { display: none; }
             .header-tools { gap: 6px; }
             .clock { display: none; }
             .header-action { min-height: 38px; padding: 0 11px; font-size: 11px; }
@@ -314,10 +221,13 @@
             .payments-main { margin-top: 25px; }
             .payments-heading { align-items: flex-start; flex-direction: column; gap: 14px; }
             .payments-title { font-size: 24px; }
-            .payments-filter-panel { padding: 14px; gap: 12px; border-radius: 12px; }
-            .filter-controls-row { flex-direction: column; align-items: stretch; }
+            .payments-filter-panel { padding: 12px; gap: 8px; border-radius: 12px; }
+            .filter-controls-row { flex-direction: column; align-items: stretch; gap: 8px; }
             .search-input-wrap, .filter-select-wrap { width: 100%; flex: 1 1 100%; }
             .btn-reset-filter { width: 100%; }
+            .count-badge-wrap { margin-left: 0; justify-content: center; }
+            .quick-pills-row { gap: 5px; }
+            .quick-pill { font-size: 11px; padding: 4px 10px; }
             .payments-panel { padding: 10px; border-radius: 12px; }
             .payments-table { min-width: 600px; }
             .payments-table th, .payments-table td { padding: 13px 10px; }
@@ -374,7 +284,7 @@
                 <div class="flash-message" role="status">{{ session('success') }}</div>
             @endif
 
-            <!-- Filter Panel: Americano, V60, Espresso, Macha Latte, Pastry dll -->
+            <!-- Clean & Simple Filter Panel -->
             <section class="payments-filter-panel" aria-label="Filter pembayaran">
                 <form id="payment-filter-form" method="GET" action="{{ route('payments.index') }}" onsubmit="return false;">
                     <div class="filter-controls-row">
@@ -383,28 +293,28 @@
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/>
                             </svg>
                             <input id="search-input" name="search" type="search" value="{{ $search ?? '' }}"
-                                placeholder="Cari invoice, pelanggan, atau nama produk (misal: Americano, Croissant)..."
+                                placeholder="Cari invoice, pelanggan, atau nama produk..."
                                 class="filter-search-input" aria-label="Cari pembayaran">
                         </div>
 
                         <div class="filter-select-wrap">
                             <select id="product-select" name="product" class="filter-select" aria-label="Pilih menu atau pastry">
                                 <option value="all">🔍 Semua Menu & Pastry</option>
-                                <optgroup label="☕ Menu Kopi">
+                                <optgroup label="☕ Kopi">
                                     <option value="americano" {{ ($product ?? '') === 'americano' ? 'selected' : '' }}>Americano</option>
                                     <option value="v60" {{ ($product ?? '') === 'v60' ? 'selected' : '' }}>V60 / Manual Brew</option>
                                     <option value="espresso" {{ ($product ?? '') === 'espresso' ? 'selected' : '' }}>Espresso</option>
                                     <option value="latte" {{ ($product ?? '') === 'latte' ? 'selected' : '' }}>Caffè Latte</option>
                                     <option value="cappuccino" {{ ($product ?? '') === 'cappuccino' ? 'selected' : '' }}>Cappuccino</option>
                                 </optgroup>
-                                <optgroup label="🍵 Menu Non Kopi">
+                                <optgroup label="🍵 Non Kopi">
                                     <option value="macha latte" {{ ($product ?? '') === 'macha latte' || ($product ?? '') === 'matcha' ? 'selected' : '' }}>Macha Latte</option>
                                     <option value="taro" {{ ($product ?? '') === 'taro' ? 'selected' : '' }}>Taro Latte</option>
                                     <option value="red velvet" {{ ($product ?? '') === 'red velvet' ? 'selected' : '' }}>Red Velvet</option>
-                                    <option value="chocolate" {{ ($product ?? '') === 'chocolate' || ($product ?? '') === 'cokelat' ? 'selected' : '' }}>Chocolate / Cokelat</option>
+                                    <option value="chocolate" {{ ($product ?? '') === 'chocolate' || ($product ?? '') === 'cokelat' ? 'selected' : '' }}>Cokelat / Chocolate</option>
                                 </optgroup>
-                                <optgroup label="🥐 Varian Pastry & Snack (Apa Saja yang Ada)">
-                                    <option value="pastry" {{ ($product ?? '') === 'pastry' ? 'selected' : '' }}>Semua Pastry & Snack</option>
+                                <optgroup label="🥐 Pastry & Snack">
+                                    <option value="pastry" {{ ($product ?? '') === 'pastry' ? 'selected' : '' }}>Semua Pastry</option>
                                     <option value="croissant" {{ ($product ?? '') === 'croissant' ? 'selected' : '' }}>Croissant</option>
                                     <option value="croffle" {{ ($product ?? '') === 'croffle' ? 'selected' : '' }}>Croffle</option>
                                     <option value="roti" {{ ($product ?? '') === 'roti' ? 'selected' : '' }}>Roti / Toast</option>
@@ -422,55 +332,39 @@
                             </select>
                         </div>
 
-                        <button type="button" id="btn-reset" class="btn-reset-filter" title="Reset semua filter">
-                            <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <button type="button" id="btn-reset" class="btn-reset-filter" title="Reset filter">
+                            <svg class="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15"/>
                             </svg>
-                            Reset Filter
+                            Reset
                         </button>
+
+                        <div class="count-badge-wrap">
+                            <span id="filter-count-badge">{{ $payments->count() }} Transaksi</span>
+                        </div>
                     </div>
                 </form>
 
-                <!-- Kategori Utama -->
-                <div class="category-tabs-row">
-                    <span class="cat-tab-label">Kategori:</span>
-                    <button type="button" class="cat-filter-tab active" data-filter-cat="all">Semua</button>
-                    <button type="button" class="cat-filter-tab" data-filter-cat="kopi">☕ Kopi</button>
-                    <button type="button" class="cat-filter-tab" data-filter-cat="non-kopi">🍵 Non Kopi</button>
-                    <button type="button" class="cat-filter-tab" data-filter-cat="pastry">🥐 Pastry & Snack</button>
-                </div>
-
-                <!-- Quick Filter Pills: Americano, V60, Espresso, Macha Latte, Pastry dll -->
-                <div class="pills-scroll-wrapper" aria-label="Quick filter produk">
-                    <span class="pills-label">Menu Populer:</span>
-                    <button type="button" class="product-pill active" data-filter-product="all">✨ Semua</button>
-                    <button type="button" class="product-pill" data-filter-product="americano">☕ Americano</button>
-                    <button type="button" class="product-pill" data-filter-product="v60">☕ V60</button>
-                    <button type="button" class="product-pill" data-filter-product="espresso">☕ Espresso</button>
-                    <button type="button" class="product-pill" data-filter-product="macha latte">🍵 Macha Latte</button>
-                    <button type="button" class="product-pill" data-filter-product="pastry">🥐 Semua Pastry</button>
-                    <button type="button" class="product-pill" data-filter-product="croissant">🥐 Croissant</button>
-                    <button type="button" class="product-pill" data-filter-product="croffle">🧇 Croffle</button>
-                    <button type="button" class="product-pill" data-filter-product="roti">🍞 Roti / Toast</button>
-                    <button type="button" class="product-pill" data-filter-product="cake">🍰 Cake / Brownies</button>
+                <!-- Quick Filter Pills: Simpel & Rapi, wrap otomatis tanpa scrollbar -->
+                <div class="quick-pills-row" aria-label="Filter menu dan pastry">
+                    <button type="button" class="quick-pill active" data-filter-product="all">Semua</button>
+                    <button type="button" class="quick-pill" data-filter-product="americano">☕ Americano</button>
+                    <button type="button" class="quick-pill" data-filter-product="v60">☕ V60</button>
+                    <button type="button" class="quick-pill" data-filter-product="espresso">☕ Espresso</button>
+                    <button type="button" class="quick-pill" data-filter-product="macha latte">🍵 Macha Latte</button>
+                    <button type="button" class="quick-pill" data-filter-product="pastry">🥐 Pastry</button>
+                    <button type="button" class="quick-pill" data-filter-product="croissant">🥐 Croissant</button>
+                    <button type="button" class="quick-pill" data-filter-product="croffle">🧇 Croffle</button>
+                    <button type="button" class="quick-pill" data-filter-product="roti">🍞 Roti / Toast</button>
+                    <button type="button" class="quick-pill" data-filter-product="cake">🍰 Cake / Brownies</button>
                     @if(isset($pastryMenus) && $pastryMenus->isNotEmpty())
                         @foreach($pastryMenus as $pm)
                             @php $pmSlug = strtolower(trim($pm->name)); @endphp
                             @if(!in_array($pmSlug, ['croissant', 'croffle', 'pastry', 'roti', 'cake', 'toast', 'brownies']))
-                                <button type="button" class="product-pill" data-filter-product="{{ $pmSlug }}">🥐 {{ $pm->name }}</button>
+                                <button type="button" class="quick-pill" data-filter-product="{{ $pmSlug }}">🥐 {{ $pm->name }}</button>
                             @endif
                         @endforeach
                     @endif
-                </div>
-
-                <!-- Info Status Filter -->
-                <div class="filter-status-row">
-                    <div class="filter-status-info">
-                        <span>Menampilkan transaksi:</span>
-                        <span id="active-filter-badge" class="filter-badge-active">Semua Menu & Transaksi</span>
-                        <span id="filter-count-badge" class="filter-count-badge">{{ $payments->count() }} transaksi</span>
-                    </div>
-                    <button type="button" id="btn-clear-status" class="btn-clear-inline" style="display: none;" onclick="window.resetPaymentFilter()">Kembali ke Semua</button>
                 </div>
             </section>
 
@@ -567,25 +461,19 @@
         updateClock();
         setInterval(updateClock, 1000);
 
-        // Interactive Filter: Americano, V60, Espresso, Macha Latte, Pastry dll
+        // Clean & Fast Filter: Americano, V60, Espresso, Macha Latte, Pastry dll
         (function() {
             const searchInput = document.getElementById('search-input');
             const productSelect = document.getElementById('product-select');
-            const catTabs = document.querySelectorAll('[data-filter-cat]');
-            const productPills = document.querySelectorAll('[data-filter-product]');
-            const activeFilterBadge = document.getElementById('active-filter-badge');
+            const productPills = document.querySelectorAll('.quick-pill[data-filter-product]');
             const countBadge = document.getElementById('filter-count-badge');
-            const clearStatusBtn = document.getElementById('btn-clear-status');
             const resetBtn = document.getElementById('btn-reset');
             const paymentRows = document.querySelectorAll('.payment-row');
             const emptyRow = document.getElementById('filter-empty-row');
             const emptyFilterName = document.getElementById('empty-filter-name');
 
-            let currentCat = 'all';
             let currentProduct = 'all';
 
-            const coffeeWords = ['kopi', 'coffee', 'espresso', 'americano', 'v60', 'latte', 'cappuccino', 'mocha', 'macchiato', 'affogato', 'piccolo', 'manual brew', 'cold brew'];
-            const nonCoffeeWords = ['macha', 'matcha', 'taro', 'red velvet', 'chocolate', 'cokelat', 'choco', 'tea', 'teh', 'lemonade', 'squash', 'yakult', 'mojito', 'boba', 'milk tea'];
             const pastryWords = ['pastry', 'croissant', 'croffle', 'roti', 'cake', 'toast', 'brownies', 'donut', 'cookie', 'cookies', 'pie', 'waffle', 'snack', 'danish', 'muffin'];
 
             function applyFilters() {
@@ -597,19 +485,7 @@
                     const invoice = row.getAttribute('data-invoice') || '';
                     const customer = row.getAttribute('data-customer') || '';
 
-                    // 1. Cek Kategori
-                    let matchesCategory = true;
-                    if (currentCat === 'kopi') {
-                        const hasCoffee = coffeeWords.some(w => products.includes(w));
-                        const isPureNonCoffee = nonCoffeeWords.some(w => products.includes(w)) && !products.includes('kopi') && !products.includes('coffee') && !products.includes('espresso');
-                        matchesCategory = hasCoffee && !isPureNonCoffee;
-                    } else if (currentCat === 'non-kopi') {
-                        matchesCategory = nonCoffeeWords.some(w => products.includes(w)) || products.includes('non');
-                    } else if (currentCat === 'pastry') {
-                        matchesCategory = pastryWords.some(w => products.includes(w));
-                    }
-
-                    // 2. Cek Produk Tertentu (Americano, V60, Espresso, Macha Latte, Croissant, dll)
+                    // 1. Cek Produk Tertentu (Americano, V60, Espresso, Macha Latte, Pastry, Croissant, dll)
                     let matchesProduct = true;
                     if (currentProduct !== 'all') {
                         if (currentProduct === 'macha latte' || currentProduct === 'matcha') {
@@ -623,13 +499,13 @@
                         }
                     }
 
-                    // 3. Cek Pencarian
+                    // 2. Cek Pencarian
                     let matchesSearch = true;
                     if (query) {
                         matchesSearch = products.includes(query) || invoice.includes(query) || customer.includes(query);
                     }
 
-                    if (matchesCategory && matchesProduct && matchesSearch) {
+                    if (matchesProduct && matchesSearch) {
                         row.style.display = '';
                         visibleCount++;
                     } else {
@@ -637,55 +513,25 @@
                     }
                 });
 
-                // Update UI status
+                // Update UI count
                 if (countBadge) {
-                    countBadge.textContent = `${visibleCount} transaksi`;
+                    countBadge.textContent = `${visibleCount} Transaksi`;
                 }
 
                 if (emptyRow) {
                     if (visibleCount === 0 && paymentRows.length > 0) {
                         emptyRow.style.display = '';
                         if (emptyFilterName) {
-                            emptyFilterName.textContent = currentProduct !== 'all' ? currentProduct.toUpperCase() : (currentCat !== 'all' ? currentCat.toUpperCase() : (query || 'filter'));
+                            emptyFilterName.textContent = currentProduct !== 'all' ? currentProduct.toUpperCase() : (query || 'filter');
                         }
                     } else {
                         emptyRow.style.display = 'none';
                     }
                 }
-
-                // Update Active Badge
-                let activeLabel = 'Semua Menu & Transaksi';
-                const isFiltered = currentCat !== 'all' || currentProduct !== 'all' || query !== '';
-
-                if (currentProduct !== 'all') {
-                    activeLabel = 'Menu: ' + currentProduct.toUpperCase();
-                } else if (currentCat !== 'all') {
-                    activeLabel = 'Kategori: ' + currentCat.toUpperCase();
-                } else if (query) {
-                    activeLabel = 'Pencarian: "' + query + '"';
-                }
-
-                if (activeFilterBadge) {
-                    activeFilterBadge.textContent = activeLabel;
-                }
-
-                if (clearStatusBtn) {
-                    clearStatusBtn.style.display = isFiltered ? 'inline-block' : 'none';
-                }
             }
 
-            // Sync Tabs UI
-            function setActiveCat(cat) {
-                currentCat = cat;
-                catTabs.forEach(t => {
-                    t.classList.toggle('active', t.getAttribute('data-filter-cat') === cat);
-                });
-                applyFilters();
-            }
-
-            // Sync Pills UI
             function setActiveProduct(prod) {
-                currentProduct = prod.toLowerCase();
+                currentProduct = (prod || 'all').toLowerCase();
                 productPills.forEach(p => {
                     p.classList.toggle('active', (p.getAttribute('data-filter-product') || '').toLowerCase() === currentProduct);
                 });
@@ -694,16 +540,6 @@
                 }
                 applyFilters();
             }
-
-            catTabs.forEach(tab => {
-                tab.addEventListener('click', () => {
-                    const cat = tab.getAttribute('data-filter-cat') || 'all';
-                    currentProduct = 'all';
-                    productPills.forEach(p => p.classList.toggle('active', p.getAttribute('data-filter-product') === 'all'));
-                    if (productSelect) productSelect.value = 'all';
-                    setActiveCat(cat);
-                });
-            });
 
             productPills.forEach(pill => {
                 pill.addEventListener('click', () => {
@@ -729,11 +565,9 @@
             }
 
             window.resetPaymentFilter = function() {
-                currentCat = 'all';
                 currentProduct = 'all';
                 if (searchInput) searchInput.value = '';
                 if (productSelect) productSelect.value = 'all';
-                catTabs.forEach(t => t.classList.toggle('active', t.getAttribute('data-filter-cat') === 'all'));
                 productPills.forEach(p => p.classList.toggle('active', p.getAttribute('data-filter-product') === 'all'));
                 applyFilters();
             };
@@ -745,8 +579,6 @@
             // Initial trigger if query params are present from server
             @if(!empty($product) && $product !== 'all')
                 setActiveProduct("{{ $product }}");
-            @elseif(!empty($category) && $category !== 'all')
-                setActiveCat("{{ $category }}");
             @else
                 applyFilters();
             @endif
