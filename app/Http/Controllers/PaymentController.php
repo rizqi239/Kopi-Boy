@@ -45,111 +45,118 @@ class PaymentController extends Controller
             });
         }
 
-        $search = trim((string) $request->get('search', ''));
-        $category = trim((string) $request->get('category', 'all'));
-        $product = trim((string) $request->get('product', 'all'));
+        $search = '';
+        $category = 'all';
+        $product = 'all';
 
-        // Filter pencarian invoice, pelanggan, atau nama produk
-        if ($search !== '') {
-            $searchLower = strtolower($search);
-            $query->where(function ($q) use ($searchLower) {
-                $q->whereHas('order', function ($oq) use ($searchLower) {
-                    $oq->whereRaw("LOWER(invoice) LIKE ?", ["%{$searchLower}%"])
-                       ->orWhereHas('user', function ($uq) use ($searchLower) {
-                           $uq->whereRaw("LOWER(name) LIKE ?", ["%{$searchLower}%"]);
-                       })
-                       ->orWhereHas('items', function ($iq) use ($searchLower) {
-                           $iq->whereRaw("LOWER(name) LIKE ?", ["%{$searchLower}%"]);
-                       });
+        // Hanya role admin yang dapat menggunakan fitur filter transaksi
+        if (auth()->user()?->role === 'admin') {
+            $search = trim((string) $request->get('search', ''));
+            $category = trim((string) $request->get('category', 'all'));
+            $product = trim((string) $request->get('product', 'all'));
+
+            // Filter pencarian invoice, pelanggan, atau nama produk
+            if ($search !== '') {
+                $searchLower = strtolower($search);
+                $query->where(function ($q) use ($searchLower) {
+                    $q->whereHas('order', function ($oq) use ($searchLower) {
+                        $oq->whereRaw("LOWER(invoice) LIKE ?", ["%{$searchLower}%"])
+                           ->orWhereHas('user', function ($uq) use ($searchLower) {
+                               $uq->whereRaw("LOWER(name) LIKE ?", ["%{$searchLower}%"]);
+                           })
+                           ->orWhereHas('items', function ($iq) use ($searchLower) {
+                               $iq->whereRaw("LOWER(name) LIKE ?", ["%{$searchLower}%"]);
+                           });
+                    });
                 });
-            });
-        }
+            }
 
-        // Filter produk tertentu (misal: americano, v60, espresso, macha latte, croissant, dll)
-        if ($product !== '' && strtolower($product) !== 'all') {
-            $prodLower = strtolower($product);
-            $query->whereHas('order.items', function ($iq) use ($prodLower) {
-                if ($prodLower === 'macha' || $prodLower === 'matcha' || $prodLower === 'macha latte' || $prodLower === 'matcha latte') {
-                    $iq->where(function ($sub) {
-                        $sub->whereRaw("LOWER(name) LIKE '%macha%'")
-                            ->orWhereRaw("LOWER(name) LIKE '%matcha%'");
+            // Filter produk tertentu (misal: americano, v60, espresso, macha latte, croissant, dll)
+            if ($product !== '' && strtolower($product) !== 'all') {
+                $prodLower = strtolower($product);
+                $query->whereHas('order.items', function ($iq) use ($prodLower) {
+                    if ($prodLower === 'macha' || $prodLower === 'matcha' || $prodLower === 'macha latte' || $prodLower === 'matcha latte') {
+                        $iq->where(function ($sub) {
+                            $sub->whereRaw("LOWER(name) LIKE '%macha%'")
+                                ->orWhereRaw("LOWER(name) LIKE '%matcha%'");
+                        });
+                    } elseif ($prodLower === 'v60' || $prodLower === 'v-60') {
+                        $iq->where(function ($sub) {
+                            $sub->whereRaw("LOWER(name) LIKE '%v60%'")
+                                ->orWhereRaw("LOWER(name) LIKE '%v-60%'");
+                        });
+                    } elseif ($prodLower === 'pastry') {
+                        $iq->where(function ($sub) {
+                            $sub->whereRaw("LOWER(name) LIKE '%pastry%'")
+                                ->orWhereRaw("LOWER(name) LIKE '%croissant%'")
+                                ->orWhereRaw("LOWER(name) LIKE '%croffle%'")
+                                ->orWhereRaw("LOWER(name) LIKE '%roti%'")
+                                ->orWhereRaw("LOWER(name) LIKE '%cake%'")
+                                ->orWhereRaw("LOWER(name) LIKE '%toast%'")
+                                ->orWhereRaw("LOWER(name) LIKE '%brownies%'")
+                                ->orWhereRaw("LOWER(name) LIKE '%cookie%'")
+                                ->orWhereRaw("LOWER(name) LIKE '%donut%'")
+                                ->orWhereRaw("LOWER(name) LIKE '%waffle%'")
+                                ->orWhereRaw("LOWER(name) LIKE '%snack%'");
+                        });
+                    } else {
+                        $iq->whereRaw("LOWER(name) LIKE ?", ["%{$prodLower}%"]);
+                    }
+                });
+            }
+
+            // Filter kategori (kopi, non-kopi, pastry)
+            if ($category !== '' && strtolower($category) !== 'all') {
+                $catLower = strtolower($category);
+                if ($catLower === 'kopi') {
+                    $query->whereHas('order.items', function ($iq) {
+                        $iq->where(function ($sub) {
+                            $sub->whereRaw("LOWER(name) LIKE '%kopi%'")
+                                ->orWhereRaw("LOWER(name) LIKE '%coffee%'")
+                                ->orWhereRaw("LOWER(name) LIKE '%espresso%'")
+                                ->orWhereRaw("LOWER(name) LIKE '%americano%'")
+                                ->orWhereRaw("LOWER(name) LIKE '%v60%'")
+                                ->orWhereRaw("LOWER(name) LIKE '%latte%'")
+                                ->orWhereRaw("LOWER(name) LIKE '%cappuccino%'");
+                        })->whereRaw("LOWER(name) NOT LIKE '%macha%'")
+                          ->whereRaw("LOWER(name) NOT LIKE '%matcha%'")
+                          ->whereRaw("LOWER(name) NOT LIKE '%taro%'")
+                          ->whereRaw("LOWER(name) NOT LIKE '%red velvet%'")
+                          ->whereRaw("LOWER(name) NOT LIKE '%chocolate%'")
+                          ->whereRaw("LOWER(name) NOT LIKE '%cokelat%'");
                     });
-                } elseif ($prodLower === 'v60' || $prodLower === 'v-60') {
-                    $iq->where(function ($sub) {
-                        $sub->whereRaw("LOWER(name) LIKE '%v60%'")
-                            ->orWhereRaw("LOWER(name) LIKE '%v-60%'");
+                } elseif ($catLower === 'non-kopi' || $catLower === 'non kopi') {
+                    $query->whereHas('order.items', function ($iq) {
+                        $iq->where(function ($sub) {
+                            $sub->whereRaw("LOWER(name) LIKE '%macha%'")
+                                ->orWhereRaw("LOWER(name) LIKE '%matcha%'")
+                                ->orWhereRaw("LOWER(name) LIKE '%taro%'")
+                                ->orWhereRaw("LOWER(name) LIKE '%red velvet%'")
+                                ->orWhereRaw("LOWER(name) LIKE '%chocolate%'")
+                                ->orWhereRaw("LOWER(name) LIKE '%cokelat%'")
+                                ->orWhereRaw("LOWER(name) LIKE '%tea%'")
+                                ->orWhereRaw("LOWER(name) LIKE '%teh%'")
+                                ->orWhereRaw("LOWER(name) LIKE '%non-kopi%'")
+                                ->orWhereRaw("LOWER(name) LIKE '%non kopi%'");
+                        });
                     });
-                } elseif ($prodLower === 'pastry') {
-                    $iq->where(function ($sub) {
-                        $sub->whereRaw("LOWER(name) LIKE '%pastry%'")
-                            ->orWhereRaw("LOWER(name) LIKE '%croissant%'")
-                            ->orWhereRaw("LOWER(name) LIKE '%croffle%'")
-                            ->orWhereRaw("LOWER(name) LIKE '%roti%'")
-                            ->orWhereRaw("LOWER(name) LIKE '%cake%'")
-                            ->orWhereRaw("LOWER(name) LIKE '%toast%'")
-                            ->orWhereRaw("LOWER(name) LIKE '%brownies%'")
-                            ->orWhereRaw("LOWER(name) LIKE '%cookie%'")
-                            ->orWhereRaw("LOWER(name) LIKE '%donut%'")
-                            ->orWhereRaw("LOWER(name) LIKE '%waffle%'")
-                            ->orWhereRaw("LOWER(name) LIKE '%snack%'");
+                } elseif ($catLower === 'pastry') {
+                    $query->whereHas('order.items', function ($iq) {
+                        $iq->where(function ($sub) {
+                            $sub->whereRaw("LOWER(name) LIKE '%pastry%'")
+                                ->orWhereRaw("LOWER(name) LIKE '%croissant%'")
+                                ->orWhereRaw("LOWER(name) LIKE '%croffle%'")
+                                ->orWhereRaw("LOWER(name) LIKE '%roti%'")
+                                ->orWhereRaw("LOWER(name) LIKE '%cake%'")
+                                ->orWhereRaw("LOWER(name) LIKE '%toast%'")
+                                ->orWhereRaw("LOWER(name) LIKE '%brownies%'")
+                                ->orWhereRaw("LOWER(name) LIKE '%cookie%'")
+                                ->orWhereRaw("LOWER(name) LIKE '%donut%'")
+                                ->orWhereRaw("LOWER(name) LIKE '%waffle%'")
+                                ->orWhereRaw("LOWER(name) LIKE '%snack%'");
+                        });
                     });
-                } else {
-                    $iq->whereRaw("LOWER(name) LIKE ?", ["%{$prodLower}%"]);
                 }
-            });
-        }
-
-        // Filter kategori (kopi, non-kopi, pastry)
-        if ($category !== '' && strtolower($category) !== 'all') {
-            $catLower = strtolower($category);
-            if ($catLower === 'kopi') {
-                $query->whereHas('order.items', function ($iq) {
-                    $iq->where(function ($sub) {
-                        $sub->whereRaw("LOWER(name) LIKE '%kopi%'")
-                            ->orWhereRaw("LOWER(name) LIKE '%coffee%'")
-                            ->orWhereRaw("LOWER(name) LIKE '%espresso%'")
-                            ->orWhereRaw("LOWER(name) LIKE '%americano%'")
-                            ->orWhereRaw("LOWER(name) LIKE '%v60%'")
-                            ->orWhereRaw("LOWER(name) LIKE '%latte%'")
-                            ->orWhereRaw("LOWER(name) LIKE '%cappuccino%'");
-                    })->whereRaw("LOWER(name) NOT LIKE '%macha%'")
-                      ->whereRaw("LOWER(name) NOT LIKE '%matcha%'")
-                      ->whereRaw("LOWER(name) NOT LIKE '%taro%'")
-                      ->whereRaw("LOWER(name) NOT LIKE '%red velvet%'")
-                      ->whereRaw("LOWER(name) NOT LIKE '%chocolate%'")
-                      ->whereRaw("LOWER(name) NOT LIKE '%cokelat%'");
-                });
-            } elseif ($catLower === 'non-kopi' || $catLower === 'non kopi') {
-                $query->whereHas('order.items', function ($iq) {
-                    $iq->where(function ($sub) {
-                        $sub->whereRaw("LOWER(name) LIKE '%macha%'")
-                            ->orWhereRaw("LOWER(name) LIKE '%matcha%'")
-                            ->orWhereRaw("LOWER(name) LIKE '%taro%'")
-                            ->orWhereRaw("LOWER(name) LIKE '%red velvet%'")
-                            ->orWhereRaw("LOWER(name) LIKE '%chocolate%'")
-                            ->orWhereRaw("LOWER(name) LIKE '%cokelat%'")
-                            ->orWhereRaw("LOWER(name) LIKE '%tea%'")
-                            ->orWhereRaw("LOWER(name) LIKE '%teh%'")
-                            ->orWhereRaw("LOWER(name) LIKE '%non-kopi%'")
-                            ->orWhereRaw("LOWER(name) LIKE '%non kopi%'");
-                    });
-                });
-            } elseif ($catLower === 'pastry') {
-                $query->whereHas('order.items', function ($iq) {
-                    $iq->where(function ($sub) {
-                        $sub->whereRaw("LOWER(name) LIKE '%pastry%'")
-                            ->orWhereRaw("LOWER(name) LIKE '%croissant%'")
-                            ->orWhereRaw("LOWER(name) LIKE '%croffle%'")
-                            ->orWhereRaw("LOWER(name) LIKE '%roti%'")
-                            ->orWhereRaw("LOWER(name) LIKE '%cake%'")
-                            ->orWhereRaw("LOWER(name) LIKE '%toast%'")
-                            ->orWhereRaw("LOWER(name) LIKE '%brownies%'")
-                            ->orWhereRaw("LOWER(name) LIKE '%cookie%'")
-                            ->orWhereRaw("LOWER(name) LIKE '%donut%'")
-                            ->orWhereRaw("LOWER(name) LIKE '%waffle%'")
-                            ->orWhereRaw("LOWER(name) LIKE '%snack%'");
-                    });
-                });
             }
         }
 

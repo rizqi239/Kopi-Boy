@@ -284,7 +284,8 @@
                 <div class="flash-message" role="status">{{ session('success') }}</div>
             @endif
 
-            <!-- Clean & Simple Filter Panel -->
+            <!-- Clean & Simple Filter Panel (Khusus Role Admin) -->
+            @if(auth()->user()?->role === 'admin')
             <section class="payments-filter-panel" aria-label="Filter pembayaran">
                 <form id="payment-filter-form" method="GET" action="{{ route('payments.index') }}" onsubmit="return false;">
                     <div class="filter-controls-row">
@@ -367,6 +368,7 @@
                     @endif
                 </div>
             </section>
+            @endif
 
             @if($payments->count())
                 <section class="payments-panel" aria-label="Riwayat pembayaran">
@@ -426,6 +428,7 @@
                                         </td>
                                     </tr>
                                 @endforeach
+                                @if(auth()->user()?->role === 'admin')
                                 <tr id="filter-empty-row" style="display: none;">
                                     <td colspan="8" class="empty-payments">
                                         Tidak ada transaksi pembayaran yang memuat menu "<strong id="empty-filter-name" class="text-[#4b2b19]"></strong>".
@@ -434,6 +437,7 @@
                                         </div>
                                     </td>
                                 </tr>
+                                @endif
                             </tbody>
                         </table>
                     </div>
@@ -444,8 +448,12 @@
                 </section>
             @else
                 <section class="payments-panel empty-payments" aria-label="Riwayat pembayaran kosong">
-                    Belum ada pembayaran yang sesuai dengan kriteria filter.<br>
-                    <a href="{{ route('payments.index') }}" style="color: #4b2b19; font-weight: 800; text-decoration: underline; margin-top: 10px; display: inline-block;">Tampilkan Semua Transaksi</a>
+                    @if(auth()->user()?->role === 'admin')
+                        Belum ada pembayaran yang sesuai dengan kriteria filter.<br>
+                        <a href="{{ route('payments.index') }}" style="color: #4b2b19; font-weight: 800; text-decoration: underline; margin-top: 10px; display: inline-block;">Tampilkan Semua Transaksi</a>
+                    @else
+                        Belum ada riwayat pembayaran.
+                    @endif
                 </section>
             @endif
         </main>
@@ -461,7 +469,8 @@
         updateClock();
         setInterval(updateClock, 1000);
 
-        // Clean & Fast Filter: Americano, V60, Espresso, Macha Latte, Pastry dll
+        @if(auth()->user()?->role === 'admin')
+        // Clean & Fast Filter: Americano, V60, Espresso, Macha Latte, Pastry dll (Khusus Admin)
         (function() {
             const searchInput = document.getElementById('search-input');
             const productSelect = document.getElementById('product-select');
@@ -583,6 +592,7 @@
                 applyFilters();
             @endif
         })();
+        @endif
     </script>
     @stack('scripts')
 </body>
