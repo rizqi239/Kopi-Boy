@@ -21,11 +21,9 @@ foreach ($subDirs as $dir) {
     }
 }
 
-// Pastikan database sqlite di /tmp ada
-$dbFile = '/tmp/database.sqlite';
-$isNewDb = !file_exists($dbFile);
-if ($isNewDb) {
-    touch($dbFile);
+// SQLite is only used when explicitly configured; production uses persistent Postgres.
+if (env('DB_CONNECTION') === 'sqlite' && !file_exists('/tmp/database.sqlite')) {
+    touch('/tmp/database.sqlite');
 }
 
 // Bootstrap Laravel
@@ -39,14 +37,14 @@ require __DIR__.'/../vendor/autoload.php';
 
 /** @var \Illuminate\Foundation\Application $app */
 $app = require_once __DIR__.'/../bootstrap/app.php';
+$app->useStoragePath($storagePath);
 
-// Jika database sqlite baru dibuat di /tmp, jalankan migrasi otomatis
-if ($isNewDb && env('DB_CONNECTION') === 'sqlite') {
-    try {
-        \Illuminate\Support\Facades\Artisan::call('migrate', ['--force' => true]);
-    } catch (\Throwable $e) {
-        // Abaikan error migrasi agar request utama tetap jalan
-    }
+try {
+    $app->handleRequest(\Illuminate\Http\Request::capture());
+} catch (\Throwable $e) {
+    error_log("UNCAUGHT EXCEPTION: " . $e->getMessage() . "\n" . $e->getTraceAsString());
+    header('Content-Type: text/plain; charset=UTF-8', true, 500);
+    echo "Application Error: " . $e->getMessage() . "\n";
+    echo "In " . $e->getFile() . ":" . $e->getLine() . "\n\n";
+    echo $e->getTraceAsString();
 }
-
-$app->handleRequest(\Illuminate\Http\Request::capture());

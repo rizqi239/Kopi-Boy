@@ -7,3 +7,6 @@
 .env.production
 KedaiPinky.zip
 push-github.bat
+/.agents
+/skills-lock.json
+/public/storage
