@@ -36,17 +36,149 @@ class PaymentController extends Controller
         }
     }
 
-    public function index()
+    public function index(Request $request)
     {
-        $query = Payment::with('order')->latest();
+        $query = Payment::with(['order.user', 'order.items'])->latest();
         if (auth()->user()?->role !== 'admin') {
             $query->whereHas('order', function ($q) {
                 $q->where('user_id', auth()->id());
             });
         }
 
-        $payments = $query->paginate(12);
-        return view('payments.index', compact('payments'));
+        $search = trim((string) $request->get('search', ''));
+        $category = trim((string) $request->get('category', 'all'));
+        $product = trim((string) $request->get('product', 'all'));
+
+        // Filter pencarian invoice, pelanggan, atau nama produk
+        if ($search !== '') {
+            $searchLower = strtolower($search);
+            $query->where(function ($q) use ($searchLower) {
+                $q->whereHas('order', function ($oq) use ($searchLower) {
+                    $oq->whereRaw("LOWER(invoice) LIKE ?", ["%{$searchLower}%"])
+                       ->orWhereHas('user', function ($uq) use ($searchLower) {
+                           $uq->whereRaw("LOWER(name) LIKE ?", ["%{$searchLower}%"]);
+                       })
+                       ->orWhereHas('items', function ($iq) use ($searchLower) {
+                           $iq->whereRaw("LOWER(name) LIKE ?", ["%{$searchLower}%"]);
+                       });
+                });
+            });
+        }
+
+        // Filter produk tertentu (misal: americano, v60, espresso, macha latte, croissant, dll)
+        if ($product !== '' && strtolower($product) !== 'all') {
+            $prodLower = strtolower($product);
+            $query->whereHas('order.items', function ($iq) use ($prodLower) {
+                if ($prodLower === 'macha' || $prodLower === 'matcha' || $prodLower === 'macha latte' || $prodLower === 'matcha latte') {
+                    $iq->where(function ($sub) {
+                        $sub->whereRaw("LOWER(name) LIKE '%macha%'")
+                            ->orWhereRaw("LOWER(name) LIKE '%matcha%'");
+                    });
+                } elseif ($prodLower === 'v60' || $prodLower === 'v-60') {
+                    $iq->where(function ($sub) {
+                        $sub->whereRaw("LOWER(name) LIKE '%v60%'")
+                            ->orWhereRaw("LOWER(name) LIKE '%v-60%'");
+                    });
+                } elseif ($prodLower === 'pastry') {
+                    $iq->where(function ($sub) {
+                        $sub->whereRaw("LOWER(name) LIKE '%pastry%'")
+                            ->orWhereRaw("LOWER(name) LIKE '%croissant%'")
+                            ->orWhereRaw("LOWER(name) LIKE '%croffle%'")
+                            ->orWhereRaw("LOWER(name) LIKE '%roti%'")
+                            ->orWhereRaw("LOWER(name) LIKE '%cake%'")
+                            ->orWhereRaw("LOWER(name) LIKE '%toast%'")
+                            ->orWhereRaw("LOWER(name) LIKE '%brownies%'")
+                            ->orWhereRaw("LOWER(name) LIKE '%cookie%'")
+                            ->orWhereRaw("LOWER(name) LIKE '%donut%'")
+                            ->orWhereRaw("LOWER(name) LIKE '%waffle%'")
+                            ->orWhereRaw("LOWER(name) LIKE '%snack%'");
+                    });
+                } else {
+                    $iq->whereRaw("LOWER(name) LIKE ?", ["%{$prodLower}%"]);
+                }
+            });
+        }
+
+        // Filter kategori (kopi, non-kopi, pastry)
+        if ($category !== '' && strtolower($category) !== 'all') {
+            $catLower = strtolower($category);
+            if ($catLower === 'kopi') {
+                $query->whereHas('order.items', function ($iq) {
+                    $iq->where(function ($sub) {
+                        $sub->whereRaw("LOWER(name) LIKE '%kopi%'")
+                            ->orWhereRaw("LOWER(name) LIKE '%coffee%'")
+                            ->orWhereRaw("LOWER(name) LIKE '%espresso%'")
+                            ->orWhereRaw("LOWER(name) LIKE '%americano%'")
+                            ->orWhereRaw("LOWER(name) LIKE '%v60%'")
+                            ->orWhereRaw("LOWER(name) LIKE '%latte%'")
+                            ->orWhereRaw("LOWER(name) LIKE '%cappuccino%'");
+                    })->whereRaw("LOWER(name) NOT LIKE '%macha%'")
+                      ->whereRaw("LOWER(name) NOT LIKE '%matcha%'")
+                      ->whereRaw("LOWER(name) NOT LIKE '%taro%'")
+                      ->whereRaw("LOWER(name) NOT LIKE '%red velvet%'")
+                      ->whereRaw("LOWER(name) NOT LIKE '%chocolate%'")
+                      ->whereRaw("LOWER(name) NOT LIKE '%cokelat%'");
+                });
+            } elseif ($catLower === 'non-kopi' || $catLower === 'non kopi') {
+                $query->whereHas('order.items', function ($iq) {
+                    $iq->where(function ($sub) {
+                        $sub->whereRaw("LOWER(name) LIKE '%macha%'")
+                            ->orWhereRaw("LOWER(name) LIKE '%matcha%'")
+                            ->orWhereRaw("LOWER(name) LIKE '%taro%'")
+                            ->orWhereRaw("LOWER(name) LIKE '%red velvet%'")
+                            ->orWhereRaw("LOWER(name) LIKE '%chocolate%'")
+                            ->orWhereRaw("LOWER(name) LIKE '%cokelat%'")
+                            ->orWhereRaw("LOWER(name) LIKE '%tea%'")
+                            ->orWhereRaw("LOWER(name) LIKE '%teh%'")
+                            ->orWhereRaw("LOWER(name) LIKE '%non-kopi%'")
+                            ->orWhereRaw("LOWER(name) LIKE '%non kopi%'");
+                    });
+                });
+            } elseif ($catLower === 'pastry') {
+                $query->whereHas('order.items', function ($iq) {
+                    $iq->where(function ($sub) {
+                        $sub->whereRaw("LOWER(name) LIKE '%pastry%'")
+                            ->orWhereRaw("LOWER(name) LIKE '%croissant%'")
+                            ->orWhereRaw("LOWER(name) LIKE '%croffle%'")
+                            ->orWhereRaw("LOWER(name) LIKE '%roti%'")
+                            ->orWhereRaw("LOWER(name) LIKE '%cake%'")
+                            ->orWhereRaw("LOWER(name) LIKE '%toast%'")
+                            ->orWhereRaw("LOWER(name) LIKE '%brownies%'")
+                            ->orWhereRaw("LOWER(name) LIKE '%cookie%'")
+                            ->orWhereRaw("LOWER(name) LIKE '%donut%'")
+                            ->orWhereRaw("LOWER(name) LIKE '%waffle%'")
+                            ->orWhereRaw("LOWER(name) LIKE '%snack%'");
+                    });
+                });
+            }
+        }
+
+        $payments = $query->paginate(12)->withQueryString();
+
+        // Ambil daftar menu untuk opsi filter dropdown & pastry apa saja yang ada
+        $availableMenus = collect();
+        $pastryMenus = collect();
+        try {
+            $availableMenus = Menu::select('id', 'name', 'category')->orderBy('name')->get();
+            $pastryWords = ['croissant', 'croffle', 'pastry', 'roti', 'cake', 'toast', 'kentang', 'donut', 'brownies', 'cookie', 'cookies', 'pie', 'waffle', 'danish', 'muffin'];
+            $pastryMenus = $availableMenus->filter(function ($m) use ($pastryWords) {
+                $cat = strtolower((string) ($m->category ?? ''));
+                $name = strtolower((string) ($m->name ?? ''));
+                if (str_contains($cat, 'pastry') || str_contains($cat, 'snack') || str_contains($cat, 'makanan') || str_contains($cat, 'bakery') || str_contains($cat, 'roti')) {
+                    return true;
+                }
+                foreach ($pastryWords as $pw) {
+                    if (str_contains($name, $pw)) {
+                        return true;
+                    }
+                }
+                return false;
+            });
+        } catch (\Throwable $e) {
+            // fallback gracefully
+        }
+
+        return view('payments.index', compact('payments', 'availableMenus', 'pastryMenus', 'search', 'category', 'product'));
     }
 
     public function finance()

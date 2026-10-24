@@ -65,6 +65,238 @@
             .workflow { grid-column: 1 / -1; grid-row: 2; justify-self: center; }
             .header-tools { grid-column: 2; grid-row: 1; }
         }
+        /* Filter Panel Styles */
+        .payments-filter-panel {
+            margin-bottom: 22px;
+            padding: 20px 22px;
+            background: var(--cream);
+            border: 1px solid rgb(255 255 255 / 80%);
+            border-radius: 16px;
+            box-shadow: 0 10px 30px rgb(0 0 0 / 14%);
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+        .filter-controls-row {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            flex-wrap: wrap;
+        }
+        .search-input-wrap {
+            position: relative;
+            flex: 1 1 320px;
+            min-width: 240px;
+        }
+        .search-input-icon {
+            position: absolute;
+            left: 14px;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 17px;
+            height: 17px;
+            color: #8b7561;
+            pointer-events: none;
+        }
+        .filter-search-input {
+            width: 100%;
+            min-height: 44px;
+            padding: 0 14px 0 42px;
+            color: var(--ink);
+            background: #fffaf0;
+            border: 1px solid #dfd2c0;
+            border-radius: 10px;
+            font: inherit;
+            font-size: 13px;
+            outline: none;
+            transition: all 160ms ease;
+        }
+        .filter-search-input:focus {
+            border-color: #7b4522;
+            background: #fff;
+            box-shadow: 0 0 0 3px rgb(123 69 34 / 16%);
+        }
+        .filter-select-wrap {
+            flex: 0 1 280px;
+            min-width: 200px;
+        }
+        .filter-select {
+            width: 100%;
+            min-height: 44px;
+            padding: 0 14px;
+            color: #3b281b;
+            background: #fffaf0;
+            border: 1px solid #dfd2c0;
+            border-radius: 10px;
+            font: inherit;
+            font-size: 13px;
+            font-weight: 600;
+            outline: none;
+            cursor: pointer;
+            transition: all 160ms ease;
+        }
+        .filter-select:focus {
+            border-color: #7b4522;
+            background: #fff;
+        }
+        .btn-reset-filter {
+            min-height: 44px;
+            padding: 0 16px;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 6px;
+            color: #63432b;
+            background: #ede0cb;
+            border: 1px solid #ded0ba;
+            border-radius: 10px;
+            font: inherit;
+            font-size: 12px;
+            font-weight: 700;
+            cursor: pointer;
+            transition: all 150ms ease;
+            white-space: nowrap;
+        }
+        .btn-reset-filter:hover {
+            background: #e2d2ba;
+            color: #382417;
+        }
+        .category-tabs-row {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            flex-wrap: wrap;
+        }
+        .cat-tab-label {
+            font-size: 11px;
+            font-weight: 800;
+            color: #856a52;
+            text-transform: uppercase;
+            letter-spacing: 0.6px;
+            margin-right: 4px;
+        }
+        .cat-filter-tab {
+            padding: 8px 16px;
+            background: #eee2d1;
+            color: #493323;
+            border: 1px solid rgb(255 255 255 / 60%);
+            border-radius: 999px;
+            font-size: 12.5px;
+            font-weight: 700;
+            cursor: pointer;
+            transition: all 160ms ease;
+            white-space: nowrap;
+        }
+        .cat-filter-tab:hover {
+            background: #dfcfbc;
+        }
+        .cat-filter-tab.active {
+            background: #4b2b19;
+            color: #fffaf1;
+            border-color: #4b2b19;
+            box-shadow: 0 3px 10px rgb(75 43 25 / 25%);
+        }
+        .pills-scroll-wrapper {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            overflow-x: auto;
+            padding-bottom: 4px;
+            scrollbar-width: thin;
+            scrollbar-color: #c9b69e transparent;
+        }
+        .pills-scroll-wrapper::-webkit-scrollbar {
+            height: 4px;
+        }
+        .pills-scroll-wrapper::-webkit-scrollbar-thumb {
+            background: #c9b69e;
+            border-radius: 999px;
+        }
+        .pills-label {
+            font-size: 11px;
+            font-weight: 800;
+            color: #856a52;
+            text-transform: uppercase;
+            letter-spacing: 0.6px;
+            white-space: nowrap;
+            margin-right: 2px;
+        }
+        .product-pill {
+            padding: 6px 14px;
+            background: #fffaf2;
+            color: #553b27;
+            border: 1px solid #dccdb7;
+            border-radius: 999px;
+            font-size: 12px;
+            font-weight: 700;
+            cursor: pointer;
+            white-space: nowrap;
+            transition: all 150ms ease;
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+        }
+        .product-pill:hover {
+            background: #f5e9d5;
+            border-color: #bfa588;
+            transform: translateY(-1px);
+        }
+        .product-pill.active {
+            background: #6d3f22;
+            color: #fff9f0;
+            border-color: #6d3f22;
+            box-shadow: 0 3px 8px rgb(109 63 34 / 30%);
+            transform: translateY(-1px);
+        }
+        .filter-status-row {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 12px;
+            padding-top: 10px;
+            border-top: 1px solid #e7dcce;
+            font-size: 12px;
+            color: #705844;
+            flex-wrap: wrap;
+        }
+        .filter-status-info {
+            display: flex;
+            align-items: center;
+            gap: 7px;
+            flex-wrap: wrap;
+        }
+        .filter-badge-active {
+            display: inline-flex;
+            align-items: center;
+            gap: 5px;
+            padding: 4px 10px;
+            background: #e2d2bd;
+            color: #3b2516;
+            border-radius: 6px;
+            font-weight: 800;
+        }
+        .filter-count-badge {
+            padding: 4px 10px;
+            background: #d6e8d2;
+            color: #1e5a32;
+            border-radius: 6px;
+            font-weight: 800;
+            font-size: 11.5px;
+        }
+        .btn-clear-inline {
+            color: #8b312a;
+            font-weight: 700;
+            background: none;
+            border: none;
+            padding: 0;
+            cursor: pointer;
+            text-decoration: underline;
+            text-underline-offset: 2px;
+            font-size: 11.5px;
+        }
+        .btn-clear-inline:hover {
+            color: #581611;
+        }
         @media (max-width: 620px) {
             .pos-shell { padding: 10px; }
             .pos-header { padding: 13px; grid-template-columns: minmax(0, 1fr) auto; gap: 12px; }
@@ -82,6 +314,10 @@
             .payments-main { margin-top: 25px; }
             .payments-heading { align-items: flex-start; flex-direction: column; gap: 14px; }
             .payments-title { font-size: 24px; }
+            .payments-filter-panel { padding: 14px; gap: 12px; border-radius: 12px; }
+            .filter-controls-row { flex-direction: column; align-items: stretch; }
+            .search-input-wrap, .filter-select-wrap { width: 100%; flex: 1 1 100%; }
+            .btn-reset-filter { width: 100%; }
             .payments-panel { padding: 10px; border-radius: 12px; }
             .payments-table { min-width: 600px; }
             .payments-table th, .payments-table td { padding: 13px 10px; }
@@ -138,6 +374,106 @@
                 <div class="flash-message" role="status">{{ session('success') }}</div>
             @endif
 
+            <!-- Filter Panel: Americano, V60, Espresso, Macha Latte, Pastry dll -->
+            <section class="payments-filter-panel" aria-label="Filter pembayaran">
+                <form id="payment-filter-form" method="GET" action="{{ route('payments.index') }}" onsubmit="return false;">
+                    <div class="filter-controls-row">
+                        <div class="search-input-wrap">
+                            <svg class="search-input-icon" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/>
+                            </svg>
+                            <input id="search-input" name="search" type="search" value="{{ $search ?? '' }}"
+                                placeholder="Cari invoice, pelanggan, atau nama produk (misal: Americano, Croissant)..."
+                                class="filter-search-input" aria-label="Cari pembayaran">
+                        </div>
+
+                        <div class="filter-select-wrap">
+                            <select id="product-select" name="product" class="filter-select" aria-label="Pilih menu atau pastry">
+                                <option value="all">🔍 Semua Menu & Pastry</option>
+                                <optgroup label="☕ Menu Kopi">
+                                    <option value="americano" {{ ($product ?? '') === 'americano' ? 'selected' : '' }}>Americano</option>
+                                    <option value="v60" {{ ($product ?? '') === 'v60' ? 'selected' : '' }}>V60 / Manual Brew</option>
+                                    <option value="espresso" {{ ($product ?? '') === 'espresso' ? 'selected' : '' }}>Espresso</option>
+                                    <option value="latte" {{ ($product ?? '') === 'latte' ? 'selected' : '' }}>Caffè Latte</option>
+                                    <option value="cappuccino" {{ ($product ?? '') === 'cappuccino' ? 'selected' : '' }}>Cappuccino</option>
+                                </optgroup>
+                                <optgroup label="🍵 Menu Non Kopi">
+                                    <option value="macha latte" {{ ($product ?? '') === 'macha latte' || ($product ?? '') === 'matcha' ? 'selected' : '' }}>Macha Latte</option>
+                                    <option value="taro" {{ ($product ?? '') === 'taro' ? 'selected' : '' }}>Taro Latte</option>
+                                    <option value="red velvet" {{ ($product ?? '') === 'red velvet' ? 'selected' : '' }}>Red Velvet</option>
+                                    <option value="chocolate" {{ ($product ?? '') === 'chocolate' || ($product ?? '') === 'cokelat' ? 'selected' : '' }}>Chocolate / Cokelat</option>
+                                </optgroup>
+                                <optgroup label="🥐 Varian Pastry & Snack (Apa Saja yang Ada)">
+                                    <option value="pastry" {{ ($product ?? '') === 'pastry' ? 'selected' : '' }}>Semua Pastry & Snack</option>
+                                    <option value="croissant" {{ ($product ?? '') === 'croissant' ? 'selected' : '' }}>Croissant</option>
+                                    <option value="croffle" {{ ($product ?? '') === 'croffle' ? 'selected' : '' }}>Croffle</option>
+                                    <option value="roti" {{ ($product ?? '') === 'roti' ? 'selected' : '' }}>Roti / Toast</option>
+                                    <option value="cake" {{ ($product ?? '') === 'cake' ? 'selected' : '' }}>Cake / Brownies</option>
+                                    <option value="donut" {{ ($product ?? '') === 'donut' ? 'selected' : '' }}>Donut / Waffle</option>
+                                    @if(isset($pastryMenus) && $pastryMenus->isNotEmpty())
+                                        @foreach($pastryMenus as $pm)
+                                            @php $pmSlug = strtolower(trim($pm->name)); @endphp
+                                            @if(!in_array($pmSlug, ['croissant', 'croffle', 'pastry', 'roti', 'cake']))
+                                                <option value="{{ $pmSlug }}" {{ ($product ?? '') === $pmSlug ? 'selected' : '' }}>{{ $pm->name }}</option>
+                                            @endif
+                                        @endforeach
+                                    @endif
+                                </optgroup>
+                            </select>
+                        </div>
+
+                        <button type="button" id="btn-reset" class="btn-reset-filter" title="Reset semua filter">
+                            <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15"/>
+                            </svg>
+                            Reset Filter
+                        </button>
+                    </div>
+                </form>
+
+                <!-- Kategori Utama -->
+                <div class="category-tabs-row">
+                    <span class="cat-tab-label">Kategori:</span>
+                    <button type="button" class="cat-filter-tab active" data-filter-cat="all">Semua</button>
+                    <button type="button" class="cat-filter-tab" data-filter-cat="kopi">☕ Kopi</button>
+                    <button type="button" class="cat-filter-tab" data-filter-cat="non-kopi">🍵 Non Kopi</button>
+                    <button type="button" class="cat-filter-tab" data-filter-cat="pastry">🥐 Pastry & Snack</button>
+                </div>
+
+                <!-- Quick Filter Pills: Americano, V60, Espresso, Macha Latte, Pastry dll -->
+                <div class="pills-scroll-wrapper" aria-label="Quick filter produk">
+                    <span class="pills-label">Menu Populer:</span>
+                    <button type="button" class="product-pill active" data-filter-product="all">✨ Semua</button>
+                    <button type="button" class="product-pill" data-filter-product="americano">☕ Americano</button>
+                    <button type="button" class="product-pill" data-filter-product="v60">☕ V60</button>
+                    <button type="button" class="product-pill" data-filter-product="espresso">☕ Espresso</button>
+                    <button type="button" class="product-pill" data-filter-product="macha latte">🍵 Macha Latte</button>
+                    <button type="button" class="product-pill" data-filter-product="pastry">🥐 Semua Pastry</button>
+                    <button type="button" class="product-pill" data-filter-product="croissant">🥐 Croissant</button>
+                    <button type="button" class="product-pill" data-filter-product="croffle">🧇 Croffle</button>
+                    <button type="button" class="product-pill" data-filter-product="roti">🍞 Roti / Toast</button>
+                    <button type="button" class="product-pill" data-filter-product="cake">🍰 Cake / Brownies</button>
+                    @if(isset($pastryMenus) && $pastryMenus->isNotEmpty())
+                        @foreach($pastryMenus as $pm)
+                            @php $pmSlug = strtolower(trim($pm->name)); @endphp
+                            @if(!in_array($pmSlug, ['croissant', 'croffle', 'pastry', 'roti', 'cake', 'toast', 'brownies']))
+                                <button type="button" class="product-pill" data-filter-product="{{ $pmSlug }}">🥐 {{ $pm->name }}</button>
+                            @endif
+                        @endforeach
+                    @endif
+                </div>
+
+                <!-- Info Status Filter -->
+                <div class="filter-status-row">
+                    <div class="filter-status-info">
+                        <span>Menampilkan transaksi:</span>
+                        <span id="active-filter-badge" class="filter-badge-active">Semua Menu & Transaksi</span>
+                        <span id="filter-count-badge" class="filter-count-badge">{{ $payments->count() }} transaksi</span>
+                    </div>
+                    <button type="button" id="btn-clear-status" class="btn-clear-inline" style="display: none;" onclick="window.resetPaymentFilter()">Kembali ke Semua</button>
+                </div>
+            </section>
+
             @if($payments->count())
                 <section class="payments-panel" aria-label="Riwayat pembayaran">
                     <div class="table-scroll">
@@ -156,13 +492,25 @@
                             </thead>
                             <tbody>
                                 @foreach($payments as $p)
-                                    <tr>
+                                    @php
+                                        $orderItems = $p->order && $p->order->items ? $p->order->items : collect();
+                                        $itemNames = $orderItems->pluck('name')->implode(' | ');
+                                        $itemNamesLower = strtolower($itemNames);
+                                        $invoiceLower = strtolower($p->order->invoice ?? '');
+                                        $customerLower = strtolower($p->order->user->name ?? '');
+                                    @endphp
+                                    <tr class="payment-row"
+                                        data-id="{{ $p->id }}"
+                                        data-invoice="{{ $invoiceLower }}"
+                                        data-customer="{{ $customerLower }}"
+                                        data-products="{{ $itemNamesLower }}"
+                                        data-status="{{ strtolower($p->status) }}">
                                         <td class="payment-id">#{{ $p->id }}</td>
                                         <td class="payment-invoice">{{ $p->order->invoice ?? '—' }}</td>
                                         <td class="payment-customer">{{ $p->order->user->name ?? 'Transaksi manual' }}</td>
                                         <td class="payment-products">
-                                            @if($p->order && $p->order->items->isNotEmpty())
-                                                {{ $p->order->items->map(fn ($item) => $item->name . ' × ' . $item->quantity)->implode(', ') }}
+                                            @if($orderItems->isNotEmpty())
+                                                {{ $orderItems->map(fn ($item) => $item->name . ' × ' . $item->quantity)->implode(', ') }}
                                             @else
                                                 —
                                             @endif
@@ -184,6 +532,14 @@
                                         </td>
                                     </tr>
                                 @endforeach
+                                <tr id="filter-empty-row" style="display: none;">
+                                    <td colspan="8" class="empty-payments">
+                                        Tidak ada transaksi pembayaran yang memuat menu "<strong id="empty-filter-name" class="text-[#4b2b19]"></strong>".
+                                        <div style="margin-top: 10px;">
+                                            <button type="button" class="btn-reset-filter" onclick="window.resetPaymentFilter()">Reset Filter</button>
+                                        </div>
+                                    </td>
+                                </tr>
                             </tbody>
                         </table>
                     </div>
@@ -193,7 +549,10 @@
                     @endif
                 </section>
             @else
-                <section class="payments-panel empty-payments" aria-label="Riwayat pembayaran kosong">Belum ada pembayaran</section>
+                <section class="payments-panel empty-payments" aria-label="Riwayat pembayaran kosong">
+                    Belum ada pembayaran yang sesuai dengan kriteria filter.<br>
+                    <a href="{{ route('payments.index') }}" style="color: #4b2b19; font-weight: 800; text-decoration: underline; margin-top: 10px; display: inline-block;">Tampilkan Semua Transaksi</a>
+                </section>
             @endif
         </main>
 
@@ -207,6 +566,191 @@
         };
         updateClock();
         setInterval(updateClock, 1000);
+
+        // Interactive Filter: Americano, V60, Espresso, Macha Latte, Pastry dll
+        (function() {
+            const searchInput = document.getElementById('search-input');
+            const productSelect = document.getElementById('product-select');
+            const catTabs = document.querySelectorAll('[data-filter-cat]');
+            const productPills = document.querySelectorAll('[data-filter-product]');
+            const activeFilterBadge = document.getElementById('active-filter-badge');
+            const countBadge = document.getElementById('filter-count-badge');
+            const clearStatusBtn = document.getElementById('btn-clear-status');
+            const resetBtn = document.getElementById('btn-reset');
+            const paymentRows = document.querySelectorAll('.payment-row');
+            const emptyRow = document.getElementById('filter-empty-row');
+            const emptyFilterName = document.getElementById('empty-filter-name');
+
+            let currentCat = 'all';
+            let currentProduct = 'all';
+
+            const coffeeWords = ['kopi', 'coffee', 'espresso', 'americano', 'v60', 'latte', 'cappuccino', 'mocha', 'macchiato', 'affogato', 'piccolo', 'manual brew', 'cold brew'];
+            const nonCoffeeWords = ['macha', 'matcha', 'taro', 'red velvet', 'chocolate', 'cokelat', 'choco', 'tea', 'teh', 'lemonade', 'squash', 'yakult', 'mojito', 'boba', 'milk tea'];
+            const pastryWords = ['pastry', 'croissant', 'croffle', 'roti', 'cake', 'toast', 'brownies', 'donut', 'cookie', 'cookies', 'pie', 'waffle', 'snack', 'danish', 'muffin'];
+
+            function applyFilters() {
+                const query = (searchInput?.value || '').toLowerCase().trim();
+                let visibleCount = 0;
+
+                paymentRows.forEach(row => {
+                    const products = row.getAttribute('data-products') || '';
+                    const invoice = row.getAttribute('data-invoice') || '';
+                    const customer = row.getAttribute('data-customer') || '';
+
+                    // 1. Cek Kategori
+                    let matchesCategory = true;
+                    if (currentCat === 'kopi') {
+                        const hasCoffee = coffeeWords.some(w => products.includes(w));
+                        const isPureNonCoffee = nonCoffeeWords.some(w => products.includes(w)) && !products.includes('kopi') && !products.includes('coffee') && !products.includes('espresso');
+                        matchesCategory = hasCoffee && !isPureNonCoffee;
+                    } else if (currentCat === 'non-kopi') {
+                        matchesCategory = nonCoffeeWords.some(w => products.includes(w)) || products.includes('non');
+                    } else if (currentCat === 'pastry') {
+                        matchesCategory = pastryWords.some(w => products.includes(w));
+                    }
+
+                    // 2. Cek Produk Tertentu (Americano, V60, Espresso, Macha Latte, Croissant, dll)
+                    let matchesProduct = true;
+                    if (currentProduct !== 'all') {
+                        if (currentProduct === 'macha latte' || currentProduct === 'matcha') {
+                            matchesProduct = products.includes('macha') || products.includes('matcha');
+                        } else if (currentProduct === 'v60') {
+                            matchesProduct = products.includes('v60') || products.includes('v-60');
+                        } else if (currentProduct === 'pastry') {
+                            matchesProduct = pastryWords.some(w => products.includes(w));
+                        } else {
+                            matchesProduct = products.includes(currentProduct);
+                        }
+                    }
+
+                    // 3. Cek Pencarian
+                    let matchesSearch = true;
+                    if (query) {
+                        matchesSearch = products.includes(query) || invoice.includes(query) || customer.includes(query);
+                    }
+
+                    if (matchesCategory && matchesProduct && matchesSearch) {
+                        row.style.display = '';
+                        visibleCount++;
+                    } else {
+                        row.style.display = 'none';
+                    }
+                });
+
+                // Update UI status
+                if (countBadge) {
+                    countBadge.textContent = `${visibleCount} transaksi`;
+                }
+
+                if (emptyRow) {
+                    if (visibleCount === 0 && paymentRows.length > 0) {
+                        emptyRow.style.display = '';
+                        if (emptyFilterName) {
+                            emptyFilterName.textContent = currentProduct !== 'all' ? currentProduct.toUpperCase() : (currentCat !== 'all' ? currentCat.toUpperCase() : (query || 'filter'));
+                        }
+                    } else {
+                        emptyRow.style.display = 'none';
+                    }
+                }
+
+                // Update Active Badge
+                let activeLabel = 'Semua Menu & Transaksi';
+                const isFiltered = currentCat !== 'all' || currentProduct !== 'all' || query !== '';
+
+                if (currentProduct !== 'all') {
+                    activeLabel = 'Menu: ' + currentProduct.toUpperCase();
+                } else if (currentCat !== 'all') {
+                    activeLabel = 'Kategori: ' + currentCat.toUpperCase();
+                } else if (query) {
+                    activeLabel = 'Pencarian: "' + query + '"';
+                }
+
+                if (activeFilterBadge) {
+                    activeFilterBadge.textContent = activeLabel;
+                }
+
+                if (clearStatusBtn) {
+                    clearStatusBtn.style.display = isFiltered ? 'inline-block' : 'none';
+                }
+            }
+
+            // Sync Tabs UI
+            function setActiveCat(cat) {
+                currentCat = cat;
+                catTabs.forEach(t => {
+                    t.classList.toggle('active', t.getAttribute('data-filter-cat') === cat);
+                });
+                applyFilters();
+            }
+
+            // Sync Pills UI
+            function setActiveProduct(prod) {
+                currentProduct = prod.toLowerCase();
+                productPills.forEach(p => {
+                    p.classList.toggle('active', (p.getAttribute('data-filter-product') || '').toLowerCase() === currentProduct);
+                });
+                if (productSelect) {
+                    productSelect.value = currentProduct;
+                }
+                applyFilters();
+            }
+
+            catTabs.forEach(tab => {
+                tab.addEventListener('click', () => {
+                    const cat = tab.getAttribute('data-filter-cat') || 'all';
+                    currentProduct = 'all';
+                    productPills.forEach(p => p.classList.toggle('active', p.getAttribute('data-filter-product') === 'all'));
+                    if (productSelect) productSelect.value = 'all';
+                    setActiveCat(cat);
+                });
+            });
+
+            productPills.forEach(pill => {
+                pill.addEventListener('click', () => {
+                    const prod = pill.getAttribute('data-filter-product') || 'all';
+                    setActiveProduct(prod);
+                });
+            });
+
+            if (productSelect) {
+                productSelect.addEventListener('change', () => {
+                    setActiveProduct(productSelect.value);
+                });
+            }
+
+            if (searchInput) {
+                searchInput.addEventListener('input', applyFilters);
+                searchInput.addEventListener('keydown', (e) => {
+                    if (e.key === 'Enter') {
+                        e.preventDefault();
+                        applyFilters();
+                    }
+                });
+            }
+
+            window.resetPaymentFilter = function() {
+                currentCat = 'all';
+                currentProduct = 'all';
+                if (searchInput) searchInput.value = '';
+                if (productSelect) productSelect.value = 'all';
+                catTabs.forEach(t => t.classList.toggle('active', t.getAttribute('data-filter-cat') === 'all'));
+                productPills.forEach(p => p.classList.toggle('active', p.getAttribute('data-filter-product') === 'all'));
+                applyFilters();
+            };
+
+            if (resetBtn) {
+                resetBtn.addEventListener('click', window.resetPaymentFilter);
+            }
+
+            // Initial trigger if query params are present from server
+            @if(!empty($product) && $product !== 'all')
+                setActiveProduct("{{ $product }}");
+            @elseif(!empty($category) && $category !== 'all')
+                setActiveCat("{{ $category }}");
+            @else
+                applyFilters();
+            @endif
+        })();
     </script>
     @stack('scripts')
 </body>
