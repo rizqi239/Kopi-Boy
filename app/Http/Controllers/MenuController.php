@@ -99,7 +99,11 @@ class MenuController extends Controller
         if ($request->hasFile('image')) {
             // Hapus gambar lama dari storage jika ada
             if ($menu->image) {
-                Storage::disk('public')->delete($menu->image);
+                try {
+                    Storage::disk('public')->delete($menu->image);
+                } catch (\Throwable $e) {
+                    // Abaikan jika file lama tidak ditemukan atau gagal dihapus
+                }
             }
             
             // Simpan gambar baru
@@ -120,7 +124,11 @@ class MenuController extends Controller
 
         // Hapus file fisik gambar dari folder storage agar tidak menumpuk
         if ($menu->image) {
-            Storage::disk('public')->delete($menu->image);
+            try {
+                Storage::disk('public')->delete($menu->image);
+            } catch (\Throwable $e) {
+                // Abaikan jika file fisik sudah tidak ada
+            }
         }
 
         $menu->delete();

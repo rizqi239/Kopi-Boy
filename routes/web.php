@@ -75,3 +75,21 @@ Route::middleware('auth')->group(function () {
         'index', 'create', 'store', 'show', 'edit', 'update', 'destroy'
     ]);
 });
+
+// Dynamic storage serving for Vercel Serverless /tmp storage and local fallback
+Route::get('/storage/{path}', function (string $path) {
+    // 1. Check storage_path('app/public/{path}') (e.g. /tmp/storage/app/public in Vercel)
+    $storageFile = storage_path('app/public/' . $path);
+    if (file_exists($storageFile) && is_file($storageFile)) {
+        return response()->file($storageFile);
+    }
+
+    // 2. Check public_path('storage/{path}')
+    $publicFile = public_path('storage/' . $path);
+    if (file_exists($publicFile) && is_file($publicFile)) {
+        return response()->file($publicFile);
+    }
+
+    abort(404);
+})->where('path', '.*')->name('storage.file');
+

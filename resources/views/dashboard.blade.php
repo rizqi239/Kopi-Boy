@@ -206,7 +206,7 @@
                         <article class="menu-card" data-category="{{ $menu->category_group }}" data-name="{{ strtolower($menu->name) }}" data-cat-name="{{ strtolower($menu->category ?? '') }}">
                             <div class="product-image">
                                 @if($menu->image)
-                                    <img src="{{ asset('storage/' . $menu->image) }}" alt="{{ $menu->name }}">
+                                    <img src="{{ asset('storage/' . $menu->image) }}" alt="{{ $menu->name }}" onerror="this.onerror=null; this.src='{{ asset('image/coffee-login.jpg') }}';">
                                 @else
                                     <div class="product-placeholder">No photo</div>
                                 @endif

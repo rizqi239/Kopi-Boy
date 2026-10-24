@@ -12,6 +12,7 @@ $subDirs = [
     '/framework/views',
     '/logs',
     '/app/public',
+    '/app/public/menus',
 ];
 
 foreach ($subDirs as $dir) {

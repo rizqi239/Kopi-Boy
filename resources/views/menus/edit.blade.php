@@ -181,7 +181,7 @@
           <label for="image">Gambar Menu</label>
           @if($menu->image)
             <div class="image-preview-card">
-              <img src="{{ asset('storage/' . $menu->image) }}" alt="{{ $menu->name }}" class="image-preview-thumb">
+              <img src="{{ asset('storage/' . $menu->image) }}" alt="{{ $menu->name }}" class="image-preview-thumb" onerror="this.onerror=null; this.src='{{ asset('image/coffee-login.jpg') }}';">
               <div class="image-preview-info">
                 <strong>Foto Saat Ini</strong>
                 <span>Pilih file baru di bawah ini jika ingin mengganti gambar produk.</span>
