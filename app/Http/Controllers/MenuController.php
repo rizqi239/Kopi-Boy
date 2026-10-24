@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use App\Models\Menu;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Database\QueryException;
 
 class MenuController extends Controller
 {
@@ -61,9 +63,25 @@ class MenuController extends Controller
         // Proses upload gambar jika ada
         if ($request->hasFile('image')) {
             $data['image'] = $this->processUploadedImage($request->file('image'));
+        } else {
+            unset($data['image']);
         }
 
-        Menu::create($data);
+        try {
+            Menu::create($data);
+        } catch (QueryException $e) {
+            if (str_contains($e->getMessage(), 'too long') || str_contains($e->getMessage(), '22001')) {
+                $driver = DB::getDriverName();
+                if ($driver === 'pgsql') {
+                    DB::statement('ALTER TABLE menus ALTER COLUMN image TYPE text');
+                } elseif ($driver === 'mysql' || $driver === 'mariadb') {
+                    DB::statement('ALTER TABLE menus MODIFY image LONGTEXT NULL');
+                }
+                Menu::create($data);
+            } else {
+                throw $e;
+            }
+        }
 
         return redirect()->route('menus.index')->with('success', 'Menu berhasil ditambahkan.');
     }
@@ -107,9 +125,26 @@ class MenuController extends Controller
             
             // Simpan gambar baru sebagai data URI terkompresi
             $data['image'] = $this->processUploadedImage($request->file('image'));
+        } else {
+            // Jika user tidak memilih file gambar baru, jangan timpa gambar yang sudah ada
+            unset($data['image']);
         }
 
-        $menu->update($data);
+        try {
+            $menu->update($data);
+        } catch (QueryException $e) {
+            if (str_contains($e->getMessage(), 'too long') || str_contains($e->getMessage(), '22001')) {
+                $driver = DB::getDriverName();
+                if ($driver === 'pgsql') {
+                    DB::statement('ALTER TABLE menus ALTER COLUMN image TYPE text');
+                } elseif ($driver === 'mysql' || $driver === 'mariadb') {
+                    DB::statement('ALTER TABLE menus MODIFY image LONGTEXT NULL');
+                }
+                $menu->update($data);
+            } else {
+                throw $e;
+            }
+        }
 
         return redirect()->route('menus.index')->with('success', 'Menu berhasil diperbarui.');
     }
