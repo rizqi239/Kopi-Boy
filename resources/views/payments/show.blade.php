@@ -171,9 +171,11 @@
                     <p class="payment-reference">Pembayaran #{{ $payment->id }}</p>
                 </div>
                 <div class="payment-actions">
-                    <button type="button" class="action-link" onclick="window.print()">Cetak</button>
-                    <a href="{{ route('payments.index') }}" class="action-link secondary">Riwayat Pembayaran</a>
-                    <a href="{{ route('payments.edit', $payment) }}" class="action-link">Edit Pembayaran</a>
+                    <button type="button" class="action-link secondary" onclick="window.print()">Cetak</button>
+                    <a href="{{ route('payments.index') }}" class="action-link">Selesai</a>
+                    @if(auth()->user()?->role === 'admin')
+                        <a href="{{ route('payments.edit', $payment) }}" class="action-link secondary">Edit Pembayaran</a>
+                    @endif
                 </div>
             </div>
 
